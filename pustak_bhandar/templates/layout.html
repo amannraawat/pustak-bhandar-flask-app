@@ -39,14 +39,15 @@
             </div>
             <div class="col-md-6">
               <div class="right-element">
-                <a href="#" class="user-account for-buy"
-                  ><i class="icon icon-user"></i><span>Account</span></a
+                <a href="{{url_for('register')}}" class="for-account"
+                  >Sign Up</a
                 >
+                <a href="{{url_for('login')}}" class="for-account">Log In</a>
                 <a href="#" class="cart for-buy"
                   ><i class="icon icon-clipboard"></i><span>Cart:(0 $)</span></a
                 >
 
-                <div class="action-menu">
+                <!-- <div class="action-menu">
                   <div class="search-bar">
                     <a
                       href="#"
@@ -62,8 +63,8 @@
                         type="search"
                       />
                     </form>
-                  </div>
-                </div>
+                  </div> -->
+                <!-- </div> -->
               </div>
             </div>
           </div>
@@ -84,7 +85,9 @@
                   <ul class="menu-list">
                     <li class="menu-item active"><a href="#">Home</a></li>
                     <li class="menu-item">
-                      <a href="/about" class="nav-link">About</a>
+                      <a href="{{ url_for('about') }}" class="nav-link"
+                        >About</a
+                      >
                     </li>
                     <li class="menu-item">
                       <a href="#featured-books" class="nav-link">Featured</a>
@@ -108,6 +111,15 @@
           </div>
         </div>
       </header>
+    </div>
+
+    <br>
+
+    <div class="container w-50">
+      {% with messages=get_flashed_messages(with_categories=True) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{category}}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
     </div>
 
     {% block content %} {% endblock %}

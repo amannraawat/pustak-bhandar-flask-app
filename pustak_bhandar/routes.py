@@ -1,9 +1,7 @@
-from flask import Flask, render_template, flash, redirect, url_for
-from forms import RegistrationForm, LoginForm
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '023772ef3f65adc59f6ef24456d09d4d0fec1b86f52a10712e4d8459737107e7'
+from flask import render_template, flash, redirect, url_for
+from pustak_bhandar.forms import RegistrationForm, LoginForm
+from pustak_bhandar.models import User
+from pustak_bhandar import app
 
 @app.route('/')
 def home():
@@ -30,14 +28,13 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         if form.email.data=='aman@gmail.com' and form.password.data=='1234':
+            flash(f"Login successful for {form.email.data}", "success")
             return redirect(url_for('account'))
         else:
+            flash(f"Login unsuccessful for {form.email.data}", "danger")
             return redirect(url_for('login'))
     return render_template('login.html', form=form)
 
 @app.route('/account')
 def account():
-    return f"hello"
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return render_template('account.html')

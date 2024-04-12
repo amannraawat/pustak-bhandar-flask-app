@@ -1,5 +1,5 @@
 {% extends "layout.html" %} {% block content %}
-<br>
+<br />
 <div class="container w-50">
   <form method="POST" action="">
     {{ form.hidden_tag() }}
@@ -9,10 +9,14 @@
       <div clas="form-group">
         {{ form.username.label(class="form-control-label") }} {% if
         form.username.errors %} {{ form.username(class="form-control
-        form-control-lg is-invalid")}} {% for error in form.username.errors %}
-        <span>{{ error }}</span>
-        {% endfor %} {% else %} {{ form.username(class="form-control
-        form-control-lg") }} {% endif %}
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.username.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.username(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
 
       <div clas="form-group">
@@ -45,5 +49,11 @@
     </fieldset>
     <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
   </form>
+  <div class="border-top pt-3">
+    <small class="text-muted">
+      Already Have An Account?
+      <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+    </small>
+  </div>
 </div>
 {% endblock content%}
