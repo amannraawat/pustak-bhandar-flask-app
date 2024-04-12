@@ -22,13 +22,22 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f"Account created for {form.username.data}", "success")
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data=='aman@gmail.com' and form.password.data=='1234':
+            return redirect(url_for('account'))
+        else:
+            return redirect(url_for('login'))
     return render_template('login.html', form=form)
+
+@app.route('/account')
+def account():
+    return f"hello"
 
 if __name__ == '__main__':
     app.run(debug=True)
