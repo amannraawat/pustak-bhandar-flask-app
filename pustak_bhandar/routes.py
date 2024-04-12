@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from pustak_bhandar.forms import RegistrationForm, LoginForm
 from pustak_bhandar.models import User
-from pustak_bhandar import app
+from pustak_bhandar import app, db, bcrypt
 
 @app.route('/')
 def home():
@@ -19,7 +19,11 @@ def store():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f"Account created for {form.username.data}", "success")
+        hash_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hash_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(f"Account created for {form.username.data}! You are now able to log in.", "success")
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
