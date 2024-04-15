@@ -129,110 +129,77 @@
 
     {% block content %} {% endblock %}
 
-    <footer id="footer">
+    <footer id="footer" class="overflow-hidden pb-0">
       <div class="container">
         <div class="row">
-          <div class="col-md-4">
-            <div class="footer-item">
-              <div class="company-brand">
-                <img
-                  src="static/images/logo.png"
-                  alt="logo"
-                  class="footer-logo"
-                />
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Sagittis sed ptibus liberolectus nonet psryroin. Amet sed
-                  lorem posuere sit iaculis amet, ac urna. Adipiscing fames
-                  semper erat ac in suspendisse iaculis.
-                </p>
+          <div class="footer-top-area">
+            <div class="row d-flex flex-wrap justify-content-between">
+              <div class="col-lg-3 col-sm-6 pb-3">
+                <div class="footer-menu">
+                  <img src="static/images/logo.png" alt="logo" class="mb-2" />
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Quasi, quaerat!
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-2 col-sm-6 pb-3">
+                <div class="footer-menu">
+                  <h4 class="widget-title pb-2">QUICK LINKS</h4>
+                  <ul class="menu-list list-unstyled">
+                    <li class="menu-item text-uppercase pb-2">
+                      <a href="about.html">About</a>
+                    </li>
+                    <li class="menu-item text-uppercase pb-2">
+                      <a href="shop.html">Shop</a>
+                    </li>
+                    <li class="menu-item text-uppercase pb-2">
+                      <a href="contact.html">Contact</a>
+                    </li>
+                    <li class="menu-item text-uppercase pb-2">
+                      <a href="login.html">Account</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6 pb-3">
+                <div class="footer-menu contact-item">
+                  <h4 class="widget-title pb-2">CONTACT INFO</h4>
+                  <ul class="menu-list list-unstyled">
+                    <li class="menu-item pb-2">
+                      <a href="#">Dehradun, Uttarakhand, India</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="#">+91 6396556815</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="mailto:">amannraawat@gmail.com</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6 pb-3">
+                <div class="footer-menu">
+                  <h4 class="widget-title pb-2">SOCIAL INFO</h4>
+                  <p>
+                    You can follow us on our social platforms to get updates.
+                  </p>
+                  <div class="social-links">
+                    <ul class="d-flex list-unstyled">
+                      <li>
+                        <a href="#"><i class="icon icon-facebook"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="icon icon-twitter"></i></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="col-md-2">
-            <div class="footer-menu">
-              <h5>About Us</h5>
-              <ul class="menu-list">
-                <li class="menu-item">
-                  <a href="#">vision</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">articles </a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">careers</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">service terms</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">donate</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="footer-menu">
-              <h5>Discover</h5>
-              <ul class="menu-list">
-                <li class="menu-item">
-                  <a href="#">Home</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Books</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Authors</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Subjects</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Advanced Search</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="footer-menu">
-              <h5>My account</h5>
-              <ul class="menu-list">
-                <li class="menu-item">
-                  <a href="#">Sign In</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">View Cart</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">My Wishtlist</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Track My Order</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="footer-menu">
-              <h5>Help</h5>
-              <ul class="menu-list">
-                <li class="menu-item">
-                  <a href="#">Help center</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Report a problem</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Suggesting edits</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#">Contact us</a>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
+        <hr />
       </div>
     </footer>
 
@@ -244,19 +211,6 @@
               <div class="row">
                 <div class="col-md-6">
                   <p>© 2024, Pustak Bhandar. All rights reserved.</p>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="social-links align-right">
-                    <ul>
-                      <li>
-                        <a href="#"><i class="icon icon-facebook"></i></a>
-                      </li>
-                      <li>
-                        <a href="#"><i class="icon icon-twitter"></i></a>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>
