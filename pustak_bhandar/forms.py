@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField, ValidationError
+from wtforms import BooleanField, StringField, PasswordField, SubmitField, ValidationError, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from pustak_bhandar.models import User
 
@@ -23,5 +23,13 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    # remember = BooleanField('Remember Me')
     submit = SubmitField('Log In')
+    
+class BookForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    author = StringField('Author', validators=[DataRequired()])
+    cover_image = StringField('Book Image', validators=[DataRequired()])
+    genre = StringField('Genre', validators=[DataRequired()])
+    link = StringField('Link', validators=[DataRequired()])
+    submit = SubmitField('Add Book')

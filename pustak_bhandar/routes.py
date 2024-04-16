@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from pustak_bhandar.forms import RegistrationForm, LoginForm
+from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm
 from pustak_bhandar.models import User
 from pustak_bhandar import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
@@ -15,6 +15,22 @@ def about():
 @app.route('/store')
 def store():
     return render_template('store.html')
+
+@app.route('/article')
+def article():
+    return render_template('article.html')
+
+@app.route('/single-product')
+def single_product():
+    return render_template('single_product.html')
+
+@app.route('/new-book', methods=['GET', 'POST'])
+def add_book():
+    form = BookForm()
+    if form.validate_on_submit():
+        flash('Your book has been added', 'success')
+        return redirect(url_for('home'))
+    return render_template('add_book.html', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

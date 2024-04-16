@@ -14,3 +14,18 @@ class User(db.Model, UserMixin):
     
     def __repr__(self):
         return f"User('{self.username}', '{self.email}, '{self.image}'')"
+    
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(40), nullable=False, unique=True)
+    author = db.Column(db.String(20), nullable=False, unique=True)
+    genre = db.Column(db.String(20), nullable=False)
+    cover_image = db.Column(db.String(20), nullable=False, unique=True)
+    links = db.Column(db.String(60), nullable=False, unique=True)
+    
+# class Article(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     title = db.Column(db.String(40), nullable=False, unique=True)
+#     description = db.Column(db.String(150), nullable=False, unique=True)
+#     cover_image = db.Column(db.String(20), nullable=False, unique=True)
+#     date_created = db.Column(db.String(20), nullable=False, unique=True)
