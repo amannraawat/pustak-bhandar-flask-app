@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField, ValidationError, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms import BooleanField, StringField, PasswordField, SubmitField, ValidationError, TextAreaField, DateField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, URL
+from flask_wtf.file import FileField, FileAllowed
 from pustak_bhandar.models import User
 
 class RegistrationForm(FlaskForm):
@@ -27,9 +28,18 @@ class LoginForm(FlaskForm):
     
 class BookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
-    cover_image = StringField('Book Image', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
     genre = StringField('Genre', validators=[DataRequired()])
-    link = StringField('Link', validators=[DataRequired()])
+    cover_image = FileField('Book Image', validators=[FileAllowed(['jpg', 'png']), DataRequired()])
+    link = StringField('Link', validators=[DataRequired(), URL()])
+    date_published = DateField('Published Date', format='%Y-%m-%d')
     submit = SubmitField('Add Book')
+    
+class ArticleForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    author = StringField('Author', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    cover_image = FileField('Article Image', validators=[FileAllowed(['jpg', 'png']), DataRequired()])
+    date_written = DateField('Date Written', validators=[DataRequired( )])
+    submit = SubmitField('Add Article')
