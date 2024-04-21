@@ -1,33 +1,27 @@
 {% extends "layout.html" %} {% block content %}
+{% if article %}
 <section id="billboard">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
                 <div class="main-slider pattern-overlay">
                     <div class="slider-item">
                         <div class="banner-content">
-                            <h2 class="banner-title">Benefits of Reading
-                                Books!</h2>
-                            <p>
-                                Reading books may have several physical and
-                                mental benefits. These include strengthening
-                                your brain, increasing your ability to
-                                empathize, reducing stress, and building your
-                                vocabulary, among others.
-                            </p>
+                            <h2 class="banner-title">{{article.short_title}}</h2>
+                            <p>{{article.short_description}}</p>
                             <div class="btn-wrap">
-                                <a href="#" class="btn btn-outline-accent btn-accent-arrow">Read
+                                <a href="{{url_for('single_article', article_id=article.id)}}" class="btn btn-outline-accent btn-accent-arrow">Read
                                     More<i class="icon icon-ns-arrow-right"></i></a>
                             </div>
                         </div>
-                        <img src="static/images/reading-a-book.jpg" alt="banner" class="banner-image" />
+                        <img src="data:image/jpeg;base64, {{article.image_data}}" alt="banner" class="banner-image"/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+{% endif %}
 
 <section id="featured-books" class="py-5 my-5">
     <div class="container">
