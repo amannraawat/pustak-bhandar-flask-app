@@ -7,12 +7,12 @@
           <div class="colored">
             <h1 class="page-title">Store</h1>
             <div class="breadcum-items">
-                <span class="item">
-                    <a href="/">Home /</a>
-                </span>
-                <span class="item colored">
-                    Shop
-                </span>
+              <span class="item">
+                <a href="/">Home /</a>
+              </span>
+              <span class="item colored">
+                Store
+              </span>
             </div>
           </div>
         </div>
@@ -20,489 +20,50 @@
     </div>
   </div>
 </div>
+
 <section class="padding-medium">
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item1.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>Portrait Photography</h3>
-            <p>Adam Silber</p>
-            <div class="item-price">$ 40.00</div>
-          </figcaption>
-        </div>
-      </div>
 
+      {% for book in books.items %}
       <div class="col-md-3">
         <div class="product-item">
           <figure class="product-style">
-            <img
-              src="static/images/tab-item2.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
+            <a href="{{ url_for('single_product', book_id=book.id) }}"><img
+                src="data:image/jpeg;base64, {{ book.image_data }}" alt="{{ book.title }} Cover"
+                class="product-item" /></a>
           </figure>
           <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
+            <h3>{{ book.title }}</h3>
+            <p>{{ book.author }}</p>
           </figcaption>
         </div>
       </div>
+      {% endfor %}
+    </div>
 
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item3.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item4.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item5.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item6.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item7.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item8.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item8.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item1.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item2.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item6.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item7.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item2.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item6.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item8.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item5.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item2.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item2.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="product-item">
-          <figure class="product-style">
-            <img
-              src="static/images/tab-item3.jpg"
-              alt="books"
-              class="product-item"
-            />
-            <button
-              type="button"
-              class="add-to-cart"
-              data-product-title="add-to-cart"
-            >
-              Add To Cart
-            </button>
-          </figure>
-          <figcaption>
-            <h3>As you like it</h3>
-            <p>ajbhcab Hjahasa</p>
-            <div class="item-price">$ 60.00</div>
-          </figcaption>
-        </div>
-      </div>
+    <div class="row">
+      <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+          {% for page_num in books.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if books.page==page_num %}
+                <li class="page-item active">
+                  <a class="page-link" href="{{url_for('store', page=page_num) }}">{{page_num}}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="{{url_for('store', page=page_num) }}">{{page_num}}</a>
+                </li>
+              {% endif %}
+            {% else %}
+              ...
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
     </div>
   </div>
 </section>
+
 {% endblock content %}
