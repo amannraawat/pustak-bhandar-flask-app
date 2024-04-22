@@ -1,0 +1,34 @@
+{% extends "layout.html"%}
+{% block content %}
+
+<section class="bg-sand padding-medium">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-4">
+        <a href="#" class="product-image"><img src="data:image/jpeg;base64, {{book.image_data }}"></a>
+      </div>
+
+      <div class="col-md-7 pl-5">
+        <div class="product-detail">
+          <span>{{ book.genre }}</span>
+          <h1>{{ book.title }}</h1>
+          <p>
+            {{ book.description }}
+          </p>
+          <!-- <p><span class="price colored fs-4">$45.00</span></p> -->
+          <div class="d-flex gap-3">
+            <!-- <input type="number" name="age" id="age" class="m-0 text-center" min="1" max="12" step="1" value="1"> -->
+            <a href="{{ book.links}}">
+            <button type="submit" class="button m-0">Buy On Amazon</button></a>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock content%}

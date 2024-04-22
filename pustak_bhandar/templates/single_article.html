@@ -1,0 +1,59 @@
+{% extends "layout.html"%}
+{% block content %}
+
+<header>
+    <h1>{{article.title}}</h1>
+    <img src="data:image/jpeg;base64, {{article.image_data}}" alt="Article Image">
+</header>
+
+<main>
+    <section id="introduction">
+        <p>{{article.description}}</p>
+    </section>
+
+    <section id="section1">
+        <h2>{{article.section1}}</h2>
+        <article>
+            <p>{{article.section1_data}}</p>
+        </article>
+    </section>
+
+    <section id="section2">
+        <h2>{{article.section2}}</h2>
+        <article>
+            <p>{{article.section2_data}}</p>
+        </article>
+    </section>
+
+    <section id="section3">
+        <h2>{{article.section3}}</h2>
+        <article>
+            <p>{{article.section3_data}}</p>
+        </article>
+    </section>
+
+    <section id="section4">
+        <h2>{{article.section4}}</h2>
+        <article>
+            <p>{{article.section4_data}}</p>
+        </article>
+    </section>
+
+    <section id="section5">
+        <h2>{{article.section5}}</h2>
+        <article>
+            <p>{{article.section5_data}}</p>
+        </article>
+    </section>
+
+    <section id="conclusion">
+        <h2>{{article.conclusion}}</h2>
+        <p>{{article.conclusion_data}}</p>
+    </section>
+
+    <div class="author-info">
+        <p class="author">Written by {{article.author}}</p>
+        <p class="date">Created on {{article.date_created}}</p>
+    </div>
+</main>
+{% endblock content%}
