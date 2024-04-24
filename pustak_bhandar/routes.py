@@ -1,9 +1,10 @@
 from flask import render_template, flash, redirect, url_for, request
-from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm, ArticleForm
+from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm, ArticleForm, UpdateAccountForm
 from pustak_bhandar.models import User, Book, Article
 from pustak_bhandar import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import base64
+import secrets, os
 
 app.config['UPLOAD_FOLDER'] = 'static/images/book_covers'
 
@@ -76,15 +77,6 @@ def single_article(article_id):
 def best_selling():
     return render_template('one_book.html')
 
-# def save_picture(form_picture):
-#     random_hex = secrets.token_hex(8)
-#     _, f_ext = os.path.splitext(form_picture.filename)
-#     picture_fn = random_hex + f_ext
-#     picture_path = os.path.join(app.root_path, 'static/images/book_covers', picture_fn)
-#     form_picture.save(picture_path)
-    
-    # return picture_fn
-
 @app.route('/add-book', methods=['GET', 'POST'])
 def add_book():
     form = BookForm()
@@ -144,8 +136,14 @@ def register():
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
+        username=form.username.data
+        email = form.email.data
+        # image_file = form.profile_picture.data
+        # image_datae = image_file.read()
+        image_data = form.profile_picture.data
+        
         hash_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hash_password)
+        user = User(username=username, email=email, image_data=image_data, password=hash_password)
         db.session.add(user)
         db.session.commit()
         flash(f"Account created for {form.username.data}! You are now able to log in.", "success")
@@ -176,11 +174,37 @@ def admin():
     else:
         flash('You must be the Admin to access the Admin page!....', 'info')
         return redirect(url_for('home'))
+    
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/images/profile_pictures', picture_fn)
+    form_picture.save(picture_path)
+    
+    return picture_fn
 
-@app.route('/account')
+@app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    return render_template('account.html')
+    form = UpdateAccountForm()
+        
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_data = picture_file
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        # current_user.image_data = form.picture.data
+        db.session.commit()
+        flash('Your account has been updated', 'success')
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        form.picture.data = current_user.image_data
+    image_file = url_for('static', filename='images/profile_pictures/' + current_user.image_data)
+    return render_template('account.html', image_file=image_file, form=form)
 
 @app.route('/logout')
 def logout():
