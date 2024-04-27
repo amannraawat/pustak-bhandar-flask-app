@@ -1,21 +1,12 @@
 {% extends "layout.html" %} {% block content %}
-<div class="site-banner">
-  <div class="banner-content">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="colored">
-            <h1 class="page-title">Admin</h1>
-            <div class="breadcum-items">
-              <span class="item">
-                <a href="/">Admin /</a>
-              </span>
-              <span class="item colored"> About </span>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="profile-container">
+  <img src="{{ image_file }}" alt="Profile Picture" class="profile-picture">
+  <div class="user-info">
+    <div>
+      <h2 class="account-heading">{{current_user.username}}</h2>
+      <p class="account-email">{{current_user.email}}</p>
     </div>
+
   </div>
 </div>
 

@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block content %}
 <br />
 <div class="container w-50">
-  <form method="POST" action="">
+  <form method="POST" action="" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Join Today</legend>
@@ -30,6 +30,16 @@
         </div>
         {% else %} {{ form.email(class="form-control form-control-lg") }} {%
         endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.profile_picture.label() }} {{
+        form.profile_picture(class="form-control-file")}}
+        {% if form.profile_picture.errors %}
+        {% for error in form.profile_picture.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        {% endif %}
       </div>
 
       <div clas="form-group">

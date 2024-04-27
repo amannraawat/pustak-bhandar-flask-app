@@ -1,6 +1,8 @@
 {% extends "layout.html" %} {% block content %}
-{% if article %}
+{% for article in articles %}
+{% if article.id==1 %}
 <section id="billboard">
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -10,11 +12,12 @@
                             <h2 class="banner-title">{{article.short_title}}</h2>
                             <p>{{article.short_description}}</p>
                             <div class="btn-wrap">
-                                <a href="{{url_for('single_article', article_id=article.id)}}" class="btn btn-outline-accent btn-accent-arrow">Read
+                                <a href="{{url_for('single_article', article_id=article.id)}}"
+                                    class="btn btn-outline-accent btn-accent-arrow">Read
                                     More<i class="icon icon-ns-arrow-right"></i></a>
                             </div>
                         </div>
-                        <img src="data:image/jpeg;base64, {{article.image_data}}" alt="banner" class="banner-image"/>
+                        <img src="data:image/jpeg;base64, {{article.image_data}}" alt="banner" class="banner-image" />
                     </div>
                 </div>
             </div>
@@ -22,6 +25,7 @@
     </div>
 </section>
 {% endif %}
+{% endfor %}
 
 <section id="featured-books" class="py-5 my-5">
     <div class="container">
@@ -35,53 +39,27 @@
                 </div>
                 <div class="product-list">
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/product-item1.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Simple way of piece life</h3>
-                                    <span>Armor Ramsey</span>
-                                </figcaption>
-                            </div>
-                        </div>
 
+                        {% for book in books %}
+                        {% if book.id==2 %}
                         <div class="col-md-3">
                             <div class="product-item">
                                 <figure class="product-style">
-                                    <img src="static/images/product-item2.jpg" alt="Books" class="product-item" />
+                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
+                                        <img src="data:image/jpeg;base64, {{book.image_data}}" alt="Books"
+                                            class="product-item" /></a>
                                 </figure>
                                 <figcaption>
-                                    <h3>Great travel at desert</h3>
-                                    <span>Sanchit Howdy</span>
+                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
+                                        <h3>{{ book.title }}</h3>
+                                    </a>
+                                    <span>{{ book.author }}</span>
                                 </figcaption>
                             </div>
                         </div>
+                        {%endif%}
+                        {% endfor %}
 
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/product-item3.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>The lady beauty Scarlett</h3>
-                                    <span>Arthur Doyle</span>
-                                </figcaption>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/product-item4.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Once upon a time</h3>
-                                    <span>Klien Marry</span>
-                                </figcaption>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -104,9 +82,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="row">
+                    {% for book in books %}
+                    {% if book.id==1 %}
                     <div class="col-md-6">
                         <figure class="products-thumb">
-                            <img src="static/images/single-image.jpg" alt="book" class="single-image" />
+                            <a href="{{url_for('single_product', book_id=book.id)}}"><img
+                                    src="data:image/jpeg;base64, {{book.image_data}}" alt="book"
+                                    class="single-image" /></a>
                         </figure>
                     </div>
 
@@ -116,22 +98,19 @@
                                 Book</h2>
 
                             <div class="products-content">
-                                <div class="author-name">By Timbur Hood</div>
-                                <h3 class="item-title">Birds gonna be happy</h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Sed
-                                    eu feugiat amet, libero ipsum enim pharetra
-                                    hac.
-                                </p>
+                                <div class="author-name">{{book.author}}</div>
+                                <a href="{{url_for('single_product', book_id=book.id)}}"><h3 class="item-title">{{book.title}}</h3></a>
+                                <p>{{book.short_description}}</p>
                                 <div class="btn-wrap">
-                                    <a href="{{ url_for('best_selling') }}"
+                                    <a href="{{url_for('single_product', book_id=book.id)}}"
                                         class="btn btn-outline-accent btn-accent-arrow">Read
                                         More<i class="icon icon-ns-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -148,106 +127,29 @@
                     </div>
                     <h2 class="section-title">Popular Books</h2>
                 </div>
-                <div class="tab-content">
+
+                <div class="product-list">
                     <div class="row">
+                        {% for book in books %}
                         <div class="col-md-3">
                             <div class="product-item">
                                 <figure class="product-style">
-                                    <img src="static/images/tab-item1.jpg" alt="Books" class="product-item" />
+                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
+                                        <img src="data:image/jpeg;base64, {{book.image_data}}" alt="Books"
+                                            class="product-item" /></a>
                                 </figure>
                                 <figcaption>
-                                    <h3>Portrait photography</h3>
-                                    <span>Adam Silber</span>
+                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
+                                        <h3>{{ book.title }}</h3>
+                                    </a>
+                                    <span>{{ book.author }}</span>
                                 </figcaption>
                             </div>
                         </div>
-
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/tab-item2.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Once upon a time</h3>
-                                    <span>Klien Marry</span>
-                                </figcaption>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/tab-item3.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Tips of simple lifestyle</h3>
-                                    <span>Bratt Smith</span>
-                                </figcaption>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/tab-item4.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Just felt from outside</h3>
-                                    <span>Nicole Wilson</span>
-                                </figcaption>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/tab-item5.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Peaceful Enlightment</h3>
-                                    <span>Marmik Lama</span>
-                                </figcaption>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/tab-item6.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Great travel at desert</h3>
-                                    <span>Sanchit Howdy</span>
-                                </figcaption>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/tab-item7.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Life among the pirates</h3>
-                                    <span>Armor Ramsey</span>
-                                </figcaption>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <img src="static/images/tab-item8.jpg" alt="Books" class="product-item" />
-                                </figure>
-                                <figcaption>
-                                    <h3>Simple way of piece life</h3>
-                                    <span>Armor Ramsey</span>
-                                </figcaption>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -265,37 +167,6 @@
     </div>
 </section>
 
-<!-- <section id="subscribe">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="title-element">
-                            <h2 class="section-title divider">Subscribe to our newsletter</h2>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="subscribe-content">
-                            <p>
-                                Sed eu feugiat amet, libero ipsum enim pharetra hac dolor sit
-                                amet, consectetur. Elit adipiscing enim pharetra hac.
-                            </p>
-                            <form id="form">
-                                <input type="text" name="email" placeholder="Enter your email addresss here" />
-                                <button class="btn-subscribe">
-                                    <span>send</span>
-                                    <i class="icon icon-send"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
-
 <section id="latest-blog" class="py-5 my-5">
     <div class="container">
         <div class="row">
@@ -307,57 +178,27 @@
                     <h2 class="section-title">Latest Articles</h2>
                 </div>
 
+                {% for article in articles %}
                 <div class="row">
                     <div class="col-md-4">
                         <article class="column">
                             <figure>
-                                <a href="#" class="image-hvr-effect">
-                                    <img src="static/images/post-img1.jpg" alt="post" class="post-image" />
+                                <a href="{{url_for('single_article', article_id=article.id)}}">
+                                    <img src="data:image/jpeg;base64, {{article.image_data}}" alt="post"
+                                        class="post-image" />
                                 </a>
                             </figure>
 
                             <div class="post-item">
-                                <div class="meta-date">Mar 30, 2021</div>
+                                <div class="meta-date">{{article.date_created}}</div>
                                 <h3>
-                                    <a href="#">Reading books always makes the
-                                        moments happy</a>
-                                </h3>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-md-4">
-                        <article class="column">
-                            <figure>
-                                <a href="#" class="image-hvr-effect">
-                                    <img src="static/images/post-img2.jpg" alt="post" class="post-image" />
-                                </a>
-                            </figure>
-                            <div class="post-item">
-                                <div class="meta-date">Mar 29, 2021</div>
-                                <h3>
-                                    <a href="#">Reading books always makes the
-                                        moments happy</a>
-                                </h3>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-md-4">
-                        <article class="column">
-                            <figure>
-                                <a href="#" class="image-hvr-effect">
-                                    <img src="static/images/post-img3.jpg" alt="post" class="post-image" />
-                                </a>
-                            </figure>
-                            <div class="post-item">
-                                <div class="meta-date">Feb 27, 2021</div>
-                                <h3>
-                                    <a href="#">Reading books always makes the
-                                        moments happy</a>
+                                    <a href="{{url_for('single_article', article_id=article.id)}}">{{article.title}}</a>
                                 </h3>
                             </div>
                         </article>
                     </div>
                 </div>
+                {% endfor %}
 
                 <div class="row">
                     <div class="btn-wrap align-center">
