@@ -30,13 +30,26 @@ class LoginForm(FlaskForm):
     
 class BookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    author = StringField('Author', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
+    first_para = TextAreaField('Another Details')
+    second_para = TextAreaField('Another Details')
+    third_para = TextAreaField('Another Details')
+    fourth_para = TextAreaField('Another Details')
+    fifth_para = TextAreaField('Another Details')
     genre = StringField('Genre', validators=[DataRequired()])
     cover_image = FileField('Book Image', validators=[FileAllowed(['jpg', 'png']), DataRequired()])
     link = StringField('Link', validators=[DataRequired(), URL()])
     date_published = DateField('Published Date', format='%Y-%m-%d')
+    author_name = StringField('Author Name', validators=[DataRequired()])
+    about = StringField('About', validators=[DataRequired()])
+    image = FileField('Image', validators=[DataRequired()])
     submit = SubmitField('Add Book')
+
+# class AuthorForm(FlaskForm):
+#     name = StringField('Name', validators=[DataRequired()])
+#     about = StringField('About', validators=[DataRequired()])
+#     image = FileField('Image', validators=[DataRequired()])
+#     submit2 = SubmitField('Add author')
     
 class ArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])

@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
 from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm, ArticleForm, UpdateAccountForm
-from pustak_bhandar.models import User, Book, Article
+from pustak_bhandar.models import User, Book, Article, Author
 from pustak_bhandar import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import base64
 import secrets, os
+from PIL import Image
 
 app.config['UPLOAD_FOLDER'] = 'static/images/book_covers'
 
@@ -13,11 +14,14 @@ def home():
     book_ids = [1,2,3]
     article_ids = [1,2,3]
     articles = Article.query.filter(Article.id.in_(article_ids)).all()
-    books = Book.query.filter(Book.id.in_(book_ids)).all()
+    books = Book.query.join(Author).filter(Book.id.in_(book_ids)).all()
     
     for book in books:
         if book.image_data:
             book.image_data = base64.b64encode(book.image_data).decode('utf-8')
+            
+        if book:
+            book.short_description = book.description[:100] + '...' if len(book.description)>100 else book.description
     
     for article in articles:
         if article.image_data:
@@ -30,22 +34,28 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', title='About')
+
+@app.route('/author/<int:author_id>')
+def author(author_id):
+    book = Author.query.get_or_404(author_id)
+    return render_template('author.html', title='Author', author=author)
 
 @app.route('/store')
 def store():
     page = request.args.get('page', 1, type=int)
-    books = Book.query.order_by(Book.id.desc()).paginate(page=page, per_page=2)
+    books = Book.query.join(Author).order_by(Book.id.desc()).paginate(page=page, per_page=12)
+    
     
     for book in books:
         if book.image_data:
             book.image_data = base64.b64encode(book.image_data).decode('utf-8')
     
-    return render_template('store.html', books=books)
+    return render_template('store.html', books=books, title='Store')
 
 @app.route('/store/<int:book_id>')
 def single_product(book_id):
-    book = Book.query.get(book_id)
+    book = Book.query.get_or_404(book_id)
     
     if book.image_data:
         book.image_data = base64.b64encode(book.image_data).decode('utf-8')
@@ -54,15 +64,16 @@ def single_product(book_id):
 
 @app.route('/article')
 def article():
-    articles = Article.query.all()
+    page = request.args.get('page', 1, type=int)
+    articles = Article.query.order_by(Article.id.desc()).paginate(page=page, per_page=5)
     
-    short_array = []
     for article in articles:
-        short_description = article.description[:100] + '...' if len(article.description) > 200 else article.description 
         if article.image_data:
             article.image_data = base64.b64encode(article.image_data).decode('utf-8')
-            short_array.append((article.id, article.title, article.author, short_description, article.image_data, article.date_created))
-    return render_template('article.html', articles=short_array)
+        
+        if article:
+            article.short_description = article.description[:50] + '...' if len(article.description)>50 else article.title
+    return render_template('article.html', articles=articles, title='Article')
 
 @app.route('/articel/<int:article_id>')
 def single_article(article_id):
@@ -80,22 +91,64 @@ def best_selling():
 @app.route('/add-book', methods=['GET', 'POST'])
 def add_book():
     form = BookForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        author = form.author.data
-        description = form.description.data
-        genre = form.genre.data
-        image_file = form.cover_image.data
-        link = form.link.data
-        date_published = form.date_published.data
+    
+    if request.method == "POST":
+        if form.validate_on_submit():
+            author_name = form.author_name.data
+            
+            author = Author.query.filter_by(name=author_name).first()
+            if author is None:
+                author_image=form.image.data
+                image_data = author_image.read()
+                author = Author(name=author_name, about=form.about.data, image_data=image_data)
+                db.session.add(author)
+                db.session.commit()
+            
+            title = form.title.data
+            description = form.description.data
+            first_para = form.first_para.data
+            second_para = form.second_para.data
+            third_para = form.third_para.data
+            fourth_para = form.fourth_para.data
+            fifth_para = form.fifth_para.data
+            genre = form.genre.data
+            image_file = form.cover_image.data
+            link = form.link.data
+            date_published = form.date_published.data
         
-        image_data = image_file.read()
+            image_data = image_file.read()
+            
+            print("Form validated successfully")
         
-        new_book = Book(title=title, author=author, description=description, genre=genre, image_data=image_data, links=link, date_published=date_published)
-        db.session.add(new_book)
-        db.session.commit()
-        flash('Your book has been added', 'success')
-        return redirect(url_for('home'))
+            new_book = Book(title=title,
+                            description=description, 
+                            first_para=first_para, 
+                            second_para=second_para, 
+                            third_para=third_para, 
+                            fourth_para=fourth_para, 
+                            fifth_para=fifth_para, 
+                            genre=genre, 
+                            image_data=image_data, 
+                            links=link, 
+                            date_published=date_published,
+                            author_id=author.id)
+            db.session.add(new_book)
+            # db.session.commit()
+        
+            # flash('Your book details has been added successfully', 'success')
+            # return redirect(url_for('home'))  
+            try:
+                db.session.commit()
+                return redirect(url_for('home'))
+            except Exception as e:
+                db.session.rollback()
+                print("Error:", e)
+                return "An error occurred while adding data to the database" 
+        
+        else:
+            print("Form validation failed") 
+            print("Form errors:", form.errors)
+    
     return render_template('add_book.html', form=form)
 
 @app.route('/add-article', methods=['GET', 'POST'])
@@ -122,7 +175,23 @@ def add_article():
         
         image_data = image_file.read()
         
-        new_article = Article(title=title, author=author, description=description, section1=section1, section1_data=section1_data, section2=section2, section2_data=section2_data,section3=section3, section3_data=section3_data,section4=section4, section4_data=section4_data,section5=section5, section5_data=section5_data,conclusion=conclusion, conclusion_data=conclusion_data, image_data=image_data, date_created=date_written)
+        new_article = Article(title=title, 
+                              author=author, 
+                              description=description, 
+                              section1=section1, 
+                              section1_data=section1_data, 
+                              section2=section2, 
+                              section2_data=section2_data,
+                              section3=section3, 
+                              section3_data=section3_data,
+                              section4=section4, 
+                              section4_data=section4_data,
+                              section5=section5, 
+                              section5_data=section5_data,
+                              conclusion=conclusion, 
+                              conclusion_data=conclusion_data, 
+                              image_data=image_data, 
+                              date_created=date_written)
         db.session.add(new_article)
         db.session.commit()
         flash('Your article has been added', 'success')
@@ -138,8 +207,6 @@ def register():
     if form.validate_on_submit():
         username=form.username.data
         email = form.email.data
-        # image_file = form.profile_picture.data
-        # image_datae = image_file.read()
         image_data = form.profile_picture.data
         
         hash_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -148,7 +215,7 @@ def register():
         db.session.commit()
         flash(f"Account created for {form.username.data}! You are now able to log in.", "success")
         return redirect(url_for('login'))
-    return render_template('register.html', form=form)
+    return render_template('register.html', form=form, title='Signup')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -163,14 +230,15 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login unsuccessful. Please check email and password.', 'danger')
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, title='Login')
 
 @app.route('/admin')
 @login_required
 def admin():
     id = current_user.id
     if id == 1:
-        return render_template('admin.html')
+        image_file = url_for('static', filename='images/profile_pictures/' + current_user.image_data)
+        return render_template('admin.html', title='Admin', image_file=image_file)
     else:
         flash('You must be the Admin to access the Admin page!....', 'info')
         return redirect(url_for('home'))
@@ -180,7 +248,12 @@ def save_picture(form_picture):
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/images/profile_pictures', picture_fn)
-    form_picture.save(picture_path)
+    
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    
+    i.save(picture_path)
     
     return picture_fn
 
@@ -195,7 +268,6 @@ def account():
             current_user.image_data = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
-        # current_user.image_data = form.picture.data
         db.session.commit()
         flash('Your account has been updated', 'success')
         return redirect(url_for('account'))
@@ -204,7 +276,7 @@ def account():
         form.email.data = current_user.email
         form.picture.data = current_user.image_data
     image_file = url_for('static', filename='images/profile_pictures/' + current_user.image_data)
-    return render_template('account.html', image_file=image_file, form=form)
+    return render_template('account.html', image_file=image_file, form=form, title='Account')
 
 @app.route('/logout')
 def logout():
