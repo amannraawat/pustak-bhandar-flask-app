@@ -45,6 +45,162 @@
       </div>
 
       <div clas="form-group">
+        {{ form.section1.label(class="form-control-label") }} {% if
+        form.section1.errors %} {{ form.section1(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section1.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section1(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section1_data.label(class="form-control-label") }} {% if
+        form.section1_data.errors %} {{ form.section1_data(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section1_data.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section1_data(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section2.label(class="form-control-label") }} {% if
+        form.section2.errors %} {{ form.section2(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section2.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section2(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section2_data.label(class="form-control-label") }} {% if
+        form.section2_data.errors %} {{ form.section2_data(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section2_data.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section2_data(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section3.label(class="form-control-label") }} {% if
+        form.section3.errors %} {{ form.section3(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section3.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section3(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section3_data.label(class="form-control-label") }} {% if
+        form.section3_data.errors %} {{ form.section3_data(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section3_data.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section3_data(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section4.label(class="form-control-label") }} {% if
+        form.section4.errors %} {{ form.section4(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section4.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section4(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section4_data.label(class="form-control-label") }} {% if
+        form.section4_data.errors %} {{ form.section4_data(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section4_data.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section4_data(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section5.label(class="form-control-label") }} {% if
+        form.section5.errors %} {{ form.section5(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section5.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section5(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.section5_data.label(class="form-control-label") }} {% if
+        form.section5_data.errors %} {{ form.section5_data(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.section5_data.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.section5_data(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.conclusion.label(class="form-control-label") }} {% if
+        form.conclusion.errors %} {{ form.conclusion(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.conclusion.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.conclusion(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
+        {{ form.conclusion_data.label(class="form-control-label") }} {% if
+        form.conclusion_data.errors %} {{ form.conclusion_data(class="form-control
+        form-control-lg is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.conclusion_data.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.conclusion_data(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div clas="form-group">
         {{ form.cover_image.label() }} {{
         form.cover_image(class="form-control-file")}}
         {% if form.cover_image.errors %}

@@ -15,7 +15,7 @@ def home():
     article_ids = [1,2,3]
     articles = Article.query.filter(Article.id.in_(article_ids)).all()
     books = Book.query.join(Author).filter(Book.id.in_(book_ids)).all()
-    
+
     for book in books:
         if book.image_data:
             book.image_data = base64.b64encode(book.image_data).decode('utf-8')
@@ -38,8 +38,17 @@ def about():
 
 @app.route('/author/<int:author_id>')
 def author(author_id):
-    book = Author.query.get_or_404(author_id)
-    return render_template('author.html', title='Author', author=author)
+    author = Author.query.get_or_404(author_id)
+    books = Book.query.filter_by(author_id=author_id).all()
+    
+    if author.image_data:
+        author.image_data = base64.b64encode(author.image_data).decode('utf-8')
+    
+    for book in books:
+        if book.image_data:
+            book.image_data = base64.b64encode(book.image_data).decode('utf-8')
+    
+    return render_template('author.html', title='Author', author=author, books=books)
 
 @app.route('/store')
 def store():
