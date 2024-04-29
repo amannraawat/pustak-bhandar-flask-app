@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, Blueprint
 from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm, ArticleForm, UpdateAccountForm
 from pustak_bhandar.models import User, Book, Article, Author
 from pustak_bhandar import app, db, bcrypt
@@ -8,6 +8,7 @@ import secrets, os
 from PIL import Image
 
 app.config['UPLOAD_FOLDER'] = 'static/images/book_covers'
+errors = Blueprint('errors', __name__)
 
 @app.route('/')
 def home():
@@ -55,7 +56,6 @@ def store():
     page = request.args.get('page', 1, type=int)
     books = Book.query.join(Author).order_by(Book.id.desc()).paginate(page=page, per_page=12)
     
-    
     for book in books:
         if book.image_data:
             book.image_data = base64.b64encode(book.image_data).decode('utf-8')
@@ -64,7 +64,7 @@ def store():
 
 @app.route('/store/<int:book_id>')
 def single_product(book_id):
-    book = Book.query.get_or_404(book_id)
+    book = Book.query.join(Author).filter(Book.id==book_id).first()
     
     if book.image_data:
         book.image_data = base64.b64encode(book.image_data).decode('utf-8')
@@ -98,115 +98,120 @@ def best_selling():
     return render_template('one_book.html')
 
 @app.route('/add-book', methods=['GET', 'POST'])
+@login_required
 def add_book():
-    form = BookForm()
+    id = current_user.id
+    if id == 1:
+        
+        form = BookForm()
     
-    if request.method == "POST":
-        if form.validate_on_submit():
-            author_name = form.author_name.data
+        if request.method == "POST":
+            if form.validate_on_submit():
+                author_name = form.author_name.data
             
-            author = Author.query.filter_by(name=author_name).first()
-            if author is None:
-                author_image=form.image.data
-                image_data = author_image.read()
-                author = Author(name=author_name, about=form.about.data, image_data=image_data)
-                db.session.add(author)
-                db.session.commit()
+                author = Author.query.filter_by(name=author_name).first()
+                if author is None:
+                    author_image=form.image.data
+                    image_data = author_image.read()
+                    author = Author(name=author_name, about=form.about.data, image_data=image_data)
+                    db.session.add(author)
+                    db.session.commit()
             
-            title = form.title.data
-            description = form.description.data
-            first_para = form.first_para.data
-            second_para = form.second_para.data
-            third_para = form.third_para.data
-            fourth_para = form.fourth_para.data
-            fifth_para = form.fifth_para.data
-            genre = form.genre.data
-            image_file = form.cover_image.data
-            link = form.link.data
-            date_published = form.date_published.data
+                title = form.title.data
+                description = form.description.data
+                first_para = form.first_para.data
+                second_para = form.second_para.data
+                third_para = form.third_para.data
+                fourth_para = form.fourth_para.data
+                fifth_para = form.fifth_para.data
+                genre = form.genre.data
+                image_file = form.cover_image.data
+                link = form.link.data
+                date_published = form.date_published.data
+                image_data = image_file.read()
         
-            image_data = image_file.read()
-            
-            print("Form validated successfully")
-        
-            new_book = Book(title=title,
-                            description=description, 
-                            first_para=first_para, 
-                            second_para=second_para, 
-                            third_para=third_para, 
-                            fourth_para=fourth_para, 
-                            fifth_para=fifth_para, 
-                            genre=genre, 
-                            image_data=image_data, 
-                            links=link, 
-                            date_published=date_published,
-                            author_id=author.id)
-            db.session.add(new_book)
-            # db.session.commit()
-        
-            # flash('Your book details has been added successfully', 'success')
-            # return redirect(url_for('home'))  
-            try:
-                db.session.commit()
-                return redirect(url_for('home'))
-            except Exception as e:
-                db.session.rollback()
-                print("Error:", e)
-                return "An error occurred while adding data to the database" 
-        
-        else:
-            print("Form validation failed") 
-            print("Form errors:", form.errors)
+                new_book = Book(title=title,
+                                description=description, 
+                                first_para=first_para, 
+                                second_para=second_para, 
+                                third_para=third_para, 
+                                fourth_para=fourth_para, 
+                                fifth_para=fifth_para, 
+                                genre=genre, 
+                                image_data=image_data, 
+                                links=link, 
+                                date_published=date_published,
+                                author_id=author.id)
+                db.session.add(new_book)
+
+                try:
+                    db.session.commit()
+                    flash('New book is added to the application', 'success')
+                    return redirect(url_for('home'))
+                except Exception as e:
+                    db.session.rollback()
+                    print("Error:", e)
+                    return "An error occurred while adding data to the database" 
+        return render_template('add_book.html', form=form)
     
-    return render_template('add_book.html', form=form)
+    else:
+        flash('You must be the Admin to access the this page!....', 'info')
+        return redirect(url_for('home'))
 
 @app.route('/add-article', methods=['GET', 'POST'])
+@login_required
 def add_article():
-    form = ArticleForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        author = form.author.data
-        description = form.description.data
-        section1 = form.section1.data
-        section1_data = form.section1_data.data
-        section2 = form.section2.data
-        section2_data = form.section2_data.data
-        section3 = form.section3.data
-        section3_data = form.section3_data.data
-        section4 = form.section4.data
-        section4_data = form.section4_data.data
-        section5 = form.section5.data
-        section5_data = form.section5_data.data
-        conclusion = form.conclusion.data
-        conclusion_data = form.conclusion_data.data
-        image_file = form.cover_image.data
-        date_written = form.date_written.data
+    id = current_user.id
+    if id == 1:
         
-        image_data = image_file.read()
+        form = ArticleForm()
+        if form.validate_on_submit():
+            title = form.title.data
+            author = form.author.data
+            description = form.description.data
+            section1 = form.section1.data
+            section1_data = form.section1_data.data
+            section2 = form.section2.data
+            section2_data = form.section2_data.data
+            section3 = form.section3.data
+            section3_data = form.section3_data.data
+            section4 = form.section4.data
+            section4_data = form.section4_data.data
+            section5 = form.section5.data
+            section5_data = form.section5_data.data
+            conclusion = form.conclusion.data
+            conclusion_data = form.conclusion_data.data
+            image_file = form.cover_image.data
+            date_written = form.date_written.data
         
-        new_article = Article(title=title, 
-                              author=author, 
-                              description=description, 
-                              section1=section1, 
-                              section1_data=section1_data, 
-                              section2=section2, 
-                              section2_data=section2_data,
-                              section3=section3, 
-                              section3_data=section3_data,
-                              section4=section4, 
-                              section4_data=section4_data,
-                              section5=section5, 
-                              section5_data=section5_data,
-                              conclusion=conclusion, 
-                              conclusion_data=conclusion_data, 
-                              image_data=image_data, 
-                              date_created=date_written)
-        db.session.add(new_article)
-        db.session.commit()
-        flash('Your article has been added', 'success')
-        return redirect(url_for('article'))
-    return render_template('add_article.html', form=form)
-
+            image_data = image_file.read()
+        
+            new_article = Article(title=title,
+                                author=author, 
+                                description=description, 
+                                section1=section1, 
+                                section1_data=section1_data, 
+                                section2=section2, 
+                                section2_data=section2_data,
+                                section3=section3, 
+                                section3_data=section3_data,
+                                section4=section4, 
+                                section4_data=section4_data,
+                                section5=section5, 
+                                section5_data=section5_data,
+                                conclusion=conclusion, 
+                                conclusion_data=conclusion_data, 
+                                image_data=image_data, 
+                                date_created=date_written)
+            db.session.add(new_article)
+            db.session.commit()
+            flash('Your article has been added', 'success')
+            return redirect(url_for('home'))
+        return render_template('add_article.html', form=form)
+    
+    else:
+        flash('You must be the Admin to access the this page!....', 'info')
+        return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -216,10 +221,9 @@ def register():
     if form.validate_on_submit():
         username=form.username.data
         email = form.email.data
-        image_data = form.profile_picture.data
         
         hash_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=username, email=email, image_data=image_data, password=hash_password)
+        user = User(username=username, email=email, password=hash_password)
         db.session.add(user)
         db.session.commit()
         flash(f"Account created for {form.username.data}! You are now able to log in.", "success")
@@ -291,3 +295,15 @@ def account():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(403)
+def error_403(error):
+    return render_template('403.htmml'), 403
+
+@app.errorhandler(500)
+def error_500(error):
+    return render_template('500.html'), 500
