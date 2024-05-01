@@ -8,7 +8,6 @@ from flask_login import current_user
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    profile_picture = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
@@ -45,12 +44,6 @@ class BookForm(FlaskForm):
     image = FileField('Image', validators=[DataRequired()])
     submit = SubmitField('Add Book')
 
-# class AuthorForm(FlaskForm):
-#     name = StringField('Name', validators=[DataRequired()])
-#     about = StringField('About', validators=[DataRequired()])
-#     image = FileField('Image', validators=[DataRequired()])
-#     submit2 = SubmitField('Add author')
-    
 class ArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
