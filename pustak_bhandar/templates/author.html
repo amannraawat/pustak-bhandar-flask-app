@@ -1,7 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>aman</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="author-section">
+                <div class="author-details">
+                    <div class="author-photo">
+                        <img src="data:image/jpeg;base64, {{ author.image_data }}" alt="Author Photo"
+                            class="img-fluid rounded-circle">
+                    </div>
+                    <div class="author-info">
+                        <h2 class="author-name">{{ author.name }}</h2>
+                        <p class="author-about">{{ author.about }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<section class="padding-medium">
+    <div class="container">
+      <div class="row">
+        <h2>{{ author.name }}'s Books</h2>
+        <br><br>
+        {% for book in books %}
+        <div class="col-md-3">
+          <div class="product-item">
+            <figure class="product-style">
+              <a href="{{ url_for('single_product', book_id=book.id) }}"><img
+                  src="data:image/jpeg;base64, {{ book.image_data }}" alt="{{ book.title }} Cover"
+                  class="product-item" /></a>
+            </figure>
+            <figcaption>
+              <h3>{{ book.title }}</h3>
+              <a href="{{ url_for('author', author_id=book.author.id) }}"><p>{{ book.author.name }}</p></a>
+            </figcaption>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</section>
 
 {% endblock content %}

@@ -13,17 +13,33 @@
         <div class="product-detail">
           <span>{{ book.genre }}</span>
           <h1>{{ book.title }}</h1>
+          <a href="{{ url_for('author', author_id=book.author.id) }}">
+            <h4>
+              {{ book.author.name }}
+            </h4>
+          </a>
           <p>
             {{ book.description }}
           </p>
-          <!-- <p><span class="price colored fs-4">$45.00</span></p> -->
+          <p>
+            {{ book.first_para }}
+          </p>
+          <p>
+            {{ book.second_para }}
+          </p>
+          <p>
+            {{ book.third_para }}
+          </p>
+          <p>
+            {{ book.fourth_para }}
+          </p>
+          <p>
+            {{ book.fifth_para }}
+          </p>
           <div class="d-flex gap-3">
-            <!-- <input type="number" name="age" id="age" class="m-0 text-center" min="1" max="12" step="1" value="1"> -->
             <a href="{{ book.links}}">
-            <button type="submit" class="button m-0">Buy On Amazon</button></a>
+              <button type="submit" class="button m-0">Buy On Amazon</button></a>
           </div>
-
-
         </div>
       </div>
 

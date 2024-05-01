@@ -35,7 +35,7 @@
           </figure>
           <figcaption>
             <h3>{{ book.title }}</h3>
-            <p>{{ book.author }}</p>
+            <a href="{{ url_for('author', author_id=book.author.id) }}"><p>{{ book.author.name }}</p></a>
           </figcaption>
         </div>
       </div>
