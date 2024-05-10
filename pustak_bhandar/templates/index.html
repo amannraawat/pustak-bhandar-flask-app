@@ -41,7 +41,7 @@
                     <div class="row">
 
                         {% for book in books %}
-                        {% if book.id==2 %}
+                        {% if book.id==1 %}
                         <div class="col-md-3">
                             <div class="product-item">
                                 <figure class="product-style">
@@ -53,7 +53,25 @@
                                     <a href="{{ url_for('single_product', book_id=book.id)}}">
                                         <h3>{{ book.title }}</h3>
                                     </a>
-                                    <span>{{ book.author }}</span>
+                                    <a href="{{ url_for('author', author_id=book.author.id) }}"><span>{{ book.author.name }}</span></a>
+                                </figcaption>
+                            </div>
+                        </div>
+                        {%endif%}
+
+                        {% if book.id==3 %}
+                        <div class="col-md-3">
+                            <div class="product-item">
+                                <figure class="product-style">
+                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
+                                        <img src="data:image/jpeg;base64, {{book.image_data}}" alt="Books"
+                                            class="product-item" /></a>
+                                </figure>
+                                <figcaption>
+                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
+                                        <h3>{{ book.title }}</h3>
+                                    </a>
+                                    <a href="{{ url_for('author', author_id=book.author.id) }}"><span>{{ book.author.name }}</span></a>
                                 </figcaption>
                             </div>
                         </div>
@@ -98,7 +116,7 @@
                                 Book</h2>
 
                             <div class="products-content">
-                                <div class="author-name">{{book.author}}</div>
+                                <a href="{{ url_for('author', author_id=book.author.id) }}"><div class="author-name">{{book.author.name}}</div></a>
                                 <a href="{{url_for('single_product', book_id=book.id)}}"><h3 class="item-title">{{book.title}}</h3></a>
                                 <p>{{book.short_description}}</p>
                                 <div class="btn-wrap">
@@ -142,7 +160,7 @@
                                     <a href="{{ url_for('single_product', book_id=book.id)}}">
                                         <h3>{{ book.title }}</h3>
                                     </a>
-                                    <span>{{ book.author }}</span>
+                                    <a href="{{ url_for('author', author_id=book.author.id) }}"><span>{{ book.author.name }}</span></a>
                                 </figcaption>
                             </div>
                         </div>
