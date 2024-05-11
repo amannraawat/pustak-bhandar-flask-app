@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, Blueprint
 from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm, ArticleForm, UpdateAccountForm
-from pustak_bhandar.models import User, Book, Article, Author
+from pustak_bhandar.models import User, Book, Article, Author, Favourite
 from pustak_bhandar import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import base64
@@ -61,6 +61,27 @@ def store():
             book.image_data = base64.b64encode(book.image_data).decode('utf-8')
     
     return render_template('store.html', books=books, title='Store')
+
+@app.route('/add_favourite/<int:book_id>', methods=['POST'])
+@login_required
+def add_favourite(book_id):
+    book=Book.query.get_or_404(book_id)
+    user_favourite = Favourite.query.filter_by(user_id=current_user.id, book_id=book.id).first()
+    if not user_favourite:
+        favourite=Favourite(user_id=current_user.id, book_id=book.id)
+        db.session.add(favourite)
+        db.session.commit()
+        flash('Book added to favourites!', 'success')
+    else:
+        flash('Book is already in favourites!', 'info')
+    return redirect(url_for('home'))
+
+@app.route('/favourites')
+@login_required
+def favourites():
+    favourites=Favourite.query.filter_by(user_id=current_user.id).all()
+    favourite_books=[favourite.book for favourite in favourites]
+    return render_template('favourite.html', favourite_books=favourite_books)
 
 @app.route('/store/<int:book_id>')
 def single_product(book_id):

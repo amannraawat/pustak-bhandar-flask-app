@@ -41,6 +41,12 @@ class Author(db.Model):
     about = db.Column(db.String(1000))
     image_data = db.Column(db.LargeBinary)
     books = db.relationship('Book', backref='writer', lazy=True)
+
+class Favourite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    book = db.relationship('Book')
     
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
