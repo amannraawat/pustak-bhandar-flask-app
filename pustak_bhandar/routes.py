@@ -76,6 +76,21 @@ def add_favourite(book_id):
         flash('Book is already in favourites!', 'info')
     return redirect(url_for('home'))
 
+@app.route('/remove_favourite/<int:book_id>', methods=['POST'])
+@login_required
+def remove_favourite(book_id):
+    if current_user.is_authenticated:
+        favourite=Favourite.query.filter_by(user_id=current_user.id, book_id=book_id).first()
+        if favourite:
+            db.session.delete(favourite)
+            db.session.commit()
+            flash('Book removed from favourites', 'success')
+        else:
+            flash('Book is not in favourites', 'info')
+    else:
+        flash('Please login to remove books from favourites', 'info')
+    return redirect(url_for('index'))
+
 @app.route('/favourites')
 @login_required
 def favourites():
