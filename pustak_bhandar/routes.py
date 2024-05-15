@@ -96,6 +96,11 @@ def remove_favourite(book_id):
 def favourites():
     favourites=Favourite.query.filter_by(user_id=current_user.id).all()
     favourite_books=[favourite.book for favourite in favourites]
+    
+    for book in favourite_books:
+        if book.image_data:
+            book.image_data = base64.b64encode(book.image_data).decode('utf-8')
+            
     return render_template('favourite.html', favourite_books=favourite_books)
 
 @app.route('/store/<int:book_id>')

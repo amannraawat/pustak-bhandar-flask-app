@@ -5,7 +5,6 @@
       <div class="row">
         <div class="col-md-12">
           <div class="colored">
-            {% if favourite_books %}
             <h1 class="page-title">Favourites</h1>
             <div class="breadcum-items">
               <span class="item">
@@ -15,9 +14,6 @@
                 Favourites
               </span>
             </div>
-            {% else %}
-            <h1>No favourite books yet.</h1>
-            {%endif%}
           </div>
         </div>
       </div>
@@ -28,23 +24,28 @@
 <section class="padding-medium">
   <div class="container">
     <div class="row">
-
+      {% if favourite_books %}
       {% for favourite in favourite_books %}
       <div class="col-md-3">
         <div class="product-item">
           <figure class="product-style">
-            <a href="{{ url_for('single_product', book_id=favourite.book.id) }}">
+            <a
+              href="{{ url_for('single_product', book_id=favourite.id) }}">
               <img
-                src="data:image/jpeg;base64, {{ favourite.book.image_data }}" alt="{{ favourite.book.title }} Cover"
+                src="data:image/jpeg;base64, {{ favourite.image_data }}"
+                alt="{{ favourite.title }} Cover"
                 class="product-item" /></a>
           </figure>
           <figcaption>
-            <h3>{{ book.title }}</h3>
-            <a href="{{ url_for('author', author_id=book.author.id) }}"><p>{{ book.author.name }}</p></a>
+            <h3>{{ favourite.title }}</h3>
+            <a
+              href="{{ url_for('author', author_id=favourite.author.id) }}"><p>{{
+                favourite.author.name }}</p></a>
           </figcaption>
         </div>
       </div>
       {% endfor %}
+      {%endif%}
     </div>
   </div>
 </section>
