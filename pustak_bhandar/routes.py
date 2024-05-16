@@ -80,6 +80,7 @@ def add_favourite(book_id):
 @login_required
 def remove_favourite(book_id):
     if current_user.is_authenticated:
+        book=Book.query.get_or_404(book_id)
         favourite=Favourite.query.filter_by(user_id=current_user.id, book_id=book_id).first()
         if favourite:
             db.session.delete(favourite)
@@ -89,7 +90,7 @@ def remove_favourite(book_id):
             flash('Book is not in favourites', 'info')
     else:
         flash('Please login to remove books from favourites', 'info')
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/favourites')
 @login_required
@@ -104,13 +105,17 @@ def favourites():
     return render_template('favourite.html', favourite_books=favourite_books)
 
 @app.route('/store/<int:book_id>')
+@login_required
 def single_product(book_id):
     book = Book.query.join(Author).filter(Book.id==book_id).first()
+    is_favourite=False
+    if not current_user.is_anonymous:
+        is_favourite = Favourite.query.filter_by(user_id=current_user.id, book_id=book_id).first()
     
     if book.image_data:
         book.image_data = base64.b64encode(book.image_data).decode('utf-8')
     
-    return render_template('single_product.html', book=book)
+    return render_template('single_product.html', book=book, is_favourite=is_favourite)
 
 @app.route('/article')
 def article():
