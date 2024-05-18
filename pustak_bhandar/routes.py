@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, Blueprint
-from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm, ArticleForm, UpdateAccountForm
-from pustak_bhandar.models import User, Book, Article, Author, Favourite
+from pustak_bhandar.forms import RegistrationForm, LoginForm, BookForm, ArticleForm, UpdateAccountForm, ReviewForm
+from pustak_bhandar.models import User, Book, Article, Author, Favourite, Review
 from pustak_bhandar import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import base64
@@ -116,6 +116,26 @@ def single_product(book_id):
         book.image_data = base64.b64encode(book.image_data).decode('utf-8')
     
     return render_template('single_product.html', book=book, is_favourite=is_favourite)
+
+@app.route('/book/<int:book_id>/review', methods=['GET', 'POST'])
+@login_required
+def give_review(book_id):
+    book = Book.query.get_or_404(book_id)
+    form = ReviewForm()
+    
+    if form.validate_on_submit():
+        review = Review(user_id=current_user.id,
+                        book_id=book.id,
+                        rating=form.rating.data,
+                        review_text=form.review_text.data)
+        
+        db.session.add(review)
+        db.sesion.commit()
+        
+        flash('Your review has been submitted!', 'success')
+        return redirect(url_for('single_product', book_id=book.id))
+    
+    return render_template('give_review.html', form=form, book=book)
 
 @app.route('/article')
 def article():

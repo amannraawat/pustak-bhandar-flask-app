@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField, ValidationError, TextAreaField, DateField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, URL
+from wtforms import BooleanField, StringField, PasswordField, SubmitField, ValidationError, TextAreaField, DateField, IntegerField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, URL, NumberRange
 from flask_wtf.file import FileField, FileAllowed
 from pustak_bhandar.models import User
 from flask_login import current_user
@@ -43,6 +43,11 @@ class BookForm(FlaskForm):
     about = StringField('About', validators=[DataRequired()])
     image = FileField('Image', validators=[DataRequired()])
     submit = SubmitField('Add Book')
+    
+class ReviewForm(FlaskForm):
+    rating = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
+    review_text = TextAreaField('Review')
+    submit = SubmitField('Submit Review')
 
 class ArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])

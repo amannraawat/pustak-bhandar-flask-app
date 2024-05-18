@@ -37,7 +37,7 @@
             {{ book.fifth_para }}
           </p>
           <div class="d-flex gap-3">
-            <a href="{{ book.links}}">
+            <a href="{{ book.links }}">
               <button type="submit" class="btn btn-primary">Buy On
                 Amazon</button></a>
             {% if is_favourite %}
@@ -46,9 +46,14 @@
             </form>
             {% else %}
             <form action="{{ url_for('add_favourite', book_id=book.id) }}" method="POST">
-              <button type="submit">Add to Favourites</button>
+              <button type="submit" class="btn btn-primary">Add to Favourites</button>
             </form>
             {% endif %}
+            <a href="{{ url_for('give_review', book_id=book.id) }}">
+              <button type="submit" class="btn btn-primary">
+                Give Review About The Book
+              </button>
+            </a>
           </div>
         </div>
       </div>
