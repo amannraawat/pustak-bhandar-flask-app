@@ -1,14 +1,15 @@
-{% extends "layout.html" %} {% block content%}
-<div class="container w-50">
+{% extends "layout.html" %} {% block content %}
+<div class="container w-50 mt-4">
   <form method="POST" action="" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Add New Book</legend>
 
-      <div clas="form-group">
+      <!-- Title Field -->
+      <div class="form-group">
         {{ form.title.label(class="form-control-label") }} {% if
         form.title.errors %} {{ form.title(class="form-control form-control-lg
-        is-invalid")}}
+        is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.title.errors %}
           <span>{{ error }}</span>
@@ -18,10 +19,11 @@
         endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- Description Field -->
+      <div class="form-group">
         {{ form.description.label(class="form-control-label") }} {% if
         form.description.errors %} {{ form.description(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.description.errors %}
           <span>{{ error }}</span>
@@ -31,35 +33,33 @@
         {% endif %}
       </div>
 
-      <div clas="form-group">
-        {{ form.first_para.label(class="form-control-label") }}
-        {{ form.first_para(class="form-control form-control-lg") }}
+      <!-- Paragraph Fields -->
+      <div class="form-group">
+        {{ form.first_para.label(class="form-control-label") }} {{
+        form.first_para(class="form-control form-control-lg") }}
+      </div>
+      <div class="form-group">
+        {{ form.second_para.label(class="form-control-label") }} {{
+        form.second_para(class="form-control form-control-lg") }}
+      </div>
+      <div class="form-group">
+        {{ form.third_para.label(class="form-control-label") }} {{
+        form.third_para(class="form-control form-control-lg") }}
+      </div>
+      <div class="form-group">
+        {{ form.fourth_para.label(class="form-control-label") }} {{
+        form.fourth_para(class="form-control form-control-lg") }}
+      </div>
+      <div class="form-group">
+        {{ form.fifth_para.label(class="form-control-label") }} {{
+        form.fifth_para(class="form-control form-control-lg") }}
       </div>
 
-      <div clas="form-group">
-        {{ form.second_para.label(class="form-control-label") }}
-        {{ form.second_para(class="form-control form-control-lg") }}
-      </div>
-
-      <div clas="form-group">
-        {{ form.third_para.label(class="form-control-label") }}
-        {{ form.third_para(class="form-control form-control-lg") }}
-      </div>
-
-      <div clas="form-group">
-        {{ form.fourth_para.label(class="form-control-label") }}
-        {{ form.fourth_para(class="form-control form-control-lg") }}
-      </div>
-
-      <div clas="form-group">
-        {{ form.fifth_para.label(class="form-control-label") }}
-        {{ form.fifth_para(class="form-control form-control-lg") }}
-      </div>
-
+      <!-- Genre Field -->
       <div class="form-group">
         {{ form.genre.label(class="form-control-label") }} {% if
-        form.genre.errors %} {{ form.genre(class="form-control form-control
-        is-invalid")}}
+        form.genre.errors %} {{ form.genre(class="form-control form-control-lg
+        is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.genre.errors %}
           <span>{{ error }}</span>
@@ -69,20 +69,19 @@
         endif %}
       </div>
 
-      <div clas="form-group">
-        {{ form.cover_image.label() }} {{
-        form.cover_image(class="form-control-file")}}
-        {% if form.cover_image.errors %}
-        {% for error in form.cover_image.errors %}
+      <!-- Cover Image Field -->
+      <div class="form-group">
+        {{ form.cover_image.label(class="form-control-label") }} {{
+        form.cover_image(class="form-control-file") }} {% if
+        form.cover_image.errors %} {% for error in form.cover_image.errors %}
         <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-        {% endif %}
+        {% endfor %} {% endif %}
       </div>
 
+      <!-- Link Field -->
       <div class="form-group">
-        {{ form.link.label(class="form-control-label") }} {% if
-        form.link.errors %} {{ form.link(class="form-control form-control
-        is-invalid")}}
+        {{ form.link.label(class="form-control-label") }} {% if form.link.errors
+        %} {{ form.link(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.link.errors %}
           <span>{{ error }}</span>
@@ -92,49 +91,52 @@
         endif %}
       </div>
 
-      <div clas="form-group">
-        {{ form.date_published.label() }}
-        {{ form.date_published(class="DateTimeField")}}
+      <!-- Date Published Field -->
+      <div class="form-group">
+        {{ form.date_published.label(class="form-control-label") }} {{
+        form.date_published(class="form-control form-control-lg") }}
       </div>
 
-      <div clas="form-group">
+      <!-- Author Name Field -->
+      <div class="form-group">
         {{ form.author_name.label(class="form-control-label") }} {% if
-        form.author_name.errors %} {{ form.author_name(class="form-control form-control-lg
-        is-invalid")}}
+        form.author_name.errors %} {{ form.author_name(class="form-control
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.author_name.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.author_name(class="form-control form-control-lg") }} {%
-        endif %}
+        {% else %} {{ form.author_name(class="form-control form-control-lg") }}
+        {% endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- About Field -->
+      <div class="form-group">
         {{ form.about.label(class="form-control-label") }} {% if
-        form.about.errors %} {{ form.about(class="form-control
-        form-control-lg is-invalid")}}
+        form.about.errors %} {{ form.about(class="form-control form-control-lg
+        is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.about.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.about(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.about(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
 
-      <div clas="form-group">
-        {{ form.image.label() }} {{
-        form.image(class="form-control-file")}}
-        {% if form.image.errors %}
-        {% for error in form.image.errors %}
+      <!-- Author Image Field -->
+      <div class="form-group">
+        {{ form.image.label(class="form-control-label") }} {{
+        form.image(class="form-control-file") }} {% if form.image.errors %} {%
+        for error in form.image.errors %}
         <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-        {% endif %}
+        {% endfor %} {% endif %}
       </div>
-
     </fieldset>
-    <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-outline-info") }}
+    </div>
   </form>
 </div>
-{% endblock content%}
+{% endblock content %}

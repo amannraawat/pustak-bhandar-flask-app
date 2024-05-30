@@ -1,14 +1,15 @@
-{% extends "layout.html" %} {% block content%}
-<div class="container w-50">
+{% extends "layout.html" %} {% block content %}
+<div class="container w-50 mt-4">
   <form method="POST" action="" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Add New Book</legend>
 
-      <div clas="form-group">
+      <!-- Title Field -->
+      <div class="form-group">
         {{ form.title.label(class="form-control-label") }} {% if
         form.title.errors %} {{ form.title(class="form-control form-control-lg
-        is-invalid")}}
+        is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.title.errors %}
           <span>{{ error }}</span>
@@ -18,10 +19,11 @@
         endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- Author Field -->
+      <div class="form-group">
         {{ form.author.label(class="form-control-label") }} {% if
         form.author.errors %} {{ form.author(class="form-control form-control-lg
-        is-invalid")}}
+        is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.author.errors %}
           <span>{{ error }}</span>
@@ -31,10 +33,11 @@
         endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- Description Field -->
+      <div class="form-group">
         {{ form.description.label(class="form-control-label") }} {% if
         form.description.errors %} {{ form.description(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.description.errors %}
           <span>{{ error }}</span>
@@ -44,140 +47,137 @@
         {% endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- Sections and Data Fields -->
+      <div class="form-group">
         {{ form.section1.label(class="form-control-label") }} {% if
         form.section1.errors %} {{ form.section1(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section1.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section1(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section1(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
-
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section1_data.label(class="form-control-label") }} {% if
         form.section1_data.errors %} {{ form.section1_data(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section1_data.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section1_data(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section1_data(class="form-control form-control-lg")
+        }} {% endif %}
       </div>
 
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section2.label(class="form-control-label") }} {% if
         form.section2.errors %} {{ form.section2(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section2.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section2(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section2(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
-
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section2_data.label(class="form-control-label") }} {% if
         form.section2_data.errors %} {{ form.section2_data(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section2_data.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section2_data(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section2_data(class="form-control form-control-lg")
+        }} {% endif %}
       </div>
 
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section3.label(class="form-control-label") }} {% if
         form.section3.errors %} {{ form.section3(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section3.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section3(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section3(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
-
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section3_data.label(class="form-control-label") }} {% if
         form.section3_data.errors %} {{ form.section3_data(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section3_data.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section3_data(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section3_data(class="form-control form-control-lg")
+        }} {% endif %}
       </div>
 
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section4.label(class="form-control-label") }} {% if
         form.section4.errors %} {{ form.section4(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section4.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section4(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section4(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
-
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section4_data.label(class="form-control-label") }} {% if
         form.section4_data.errors %} {{ form.section4_data(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section4_data.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section4_data(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section4_data(class="form-control form-control-lg")
+        }} {% endif %}
       </div>
 
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section5.label(class="form-control-label") }} {% if
         form.section5.errors %} {{ form.section5(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section5.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section5(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section5(class="form-control form-control-lg") }} {%
+        endif %}
       </div>
-
-      <div clas="form-group">
+      <div class="form-group">
         {{ form.section5_data.label(class="form-control-label") }} {% if
         form.section5_data.errors %} {{ form.section5_data(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.section5_data.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.section5_data(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.section5_data(class="form-control form-control-lg")
+        }} {% endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- Conclusion Field -->
+      <div class="form-group">
         {{ form.conclusion.label(class="form-control-label") }} {% if
         form.conclusion.errors %} {{ form.conclusion(class="form-control
-        form-control-lg is-invalid")}}
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.conclusion.errors %}
           <span>{{ error }}</span>
@@ -187,36 +187,38 @@
         {% endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- Conclusion Data Field -->
+      <div class="form-group">
         {{ form.conclusion_data.label(class="form-control-label") }} {% if
-        form.conclusion_data.errors %} {{ form.conclusion_data(class="form-control
-        form-control-lg is-invalid")}}
+        form.conclusion_data.errors %} {{
+        form.conclusion_data(class="form-control form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.conclusion_data.errors %}
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% else %} {{ form.conclusion_data(class="form-control form-control-lg") }}
-        {% endif %}
+        {% else %} {{ form.conclusion_data(class="form-control form-control-lg")
+        }} {% endif %}
       </div>
 
-      <div clas="form-group">
+      <!-- Cover Image Field -->
+      <div class="form-group">
         {{ form.cover_image.label() }} {{
-        form.cover_image(class="form-control-file")}}
-        {% if form.cover_image.errors %}
-        {% for error in form.cover_image.errors %}
+        form.cover_image(class="form-control-file") }} {% if
+        form.cover_image.errors %} {% for error in form.cover_image.errors %}
         <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-        {% endif %}
-      </div>
-      
-      <div clas="form-group">
-        {{ form.date_written.label() }}
-        {{ form.date_written(class="DateTimeField")}}
+        {% endfor %} {% endif %}
       </div>
 
+      <!-- Date Written Field -->
+      <div class="form-group">
+        {{ form.date_written.label() }} {{ form.date_written(class="form-control
+        form-control-lg") }}
+      </div>
     </fieldset>
-    <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-outline-info") }}
+    </div>
   </form>
 </div>
-{% endblock content%}
+{% endblock content %}

@@ -3,12 +3,12 @@
   <div class="banner-content">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
           <div class="colored">
             <h1 class="page-title">Store</h1>
             <div class="breadcum-items">
               <span class="item">
-                <a href="/">Home /</a>
+                <a href="{{ url_for('home') }}">Home /</a>
               </span>
               <span class="item colored">
                 Store
@@ -24,46 +24,51 @@
 <section class="padding-medium">
   <div class="container">
     <div class="row">
-
       {% for book in books.items %}
-      <div class="col-md-3">
-        <div class="product-item">
+      <div class="col-md-3 mb-4">
+        <div class="product-item card">
           <figure class="product-style">
-            <a href="{{ url_for('single_product', book_id=book.id) }}"><img
-                src="data:image/jpeg;base64, {{ book.image_data }}" alt="{{ book.title }} Cover"
-                class="product-item" /></a>
+            <a href="{{ url_for('book', book_id=book.id) }}"><img
+                src="data:image/jpeg;base64, {{ book.image_data }}"
+                alt="{{ book.title }} Cover" class="card-img-top" /></a>
           </figure>
-          <figcaption>
-            <h3>{{ book.title }}</h3>
-            <a href="{{ url_for('author', author_id=book.author.id) }}"><p>{{ book.author.name }}</p></a>
+          <figcaption class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <a href="{{ url_for('author', author_id=book.author.id) }}"
+              class="card-text">
+              {{ book.author.name }}
+            </a>
           </figcaption>
         </div>
       </div>
       {% endfor %}
     </div>
-
     <div class="row">
-      <nav class="mt-5">
+      <nav class="mt-4 w-100">
         <ul class="pagination justify-content-center">
-          {% for page_num in books.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if page_num %}
-              {% if books.page==page_num %}
-                <li class="page-item active">
-                  <a class="page-link" href="{{url_for('store', page=page_num) }}">{{page_num}}</a>
-                </li>
-              {% else %}
-                <li class="page-item">
-                  <a class="page-link" href="{{url_for('store', page=page_num) }}">{{page_num}}</a>
-                </li>
-              {% endif %}
-            {% else %}
-              ...
-            {% endif %}
+          {% for page_num in books.iter_pages(left_edge=1, right_edge=1,
+          left_current=1, right_current=2) %}
+          {% if page_num %}
+          {% if books.page==page_num %}
+          <li class="page-item active">
+            <a class="page-link"
+              href="{{url_for('store', page=page_num) }}">{{page_num}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link"
+              href="{{url_for('store', page=page_num) }}">{{page_num}}</a>
+          </li>
+          {% endif %}
+          {% else %}
+          <li class="page-item disabled">
+            <span class="page-link">...</span>
+          </li>
+          {% endif %}
           {% endfor %}
         </ul>
       </nav>
     </div>
   </div>
 </section>
-
 {% endblock content %}

@@ -1,231 +1,221 @@
 {% extends "layout.html" %} {% block content %}
-{% for article in articles %}
-{% if article.id==1 %}
 <section id="billboard">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="main-slider pattern-overlay">
-                    <div class="slider-item">
-                        <div class="banner-content">
-                            <h2 class="banner-title">{{article.short_title}}</h2>
-                            <p>{{article.short_description}}</p>
-                            <div class="btn-wrap">
-                                <a href="{{url_for('single_article', article_id=article.id)}}"
-                                    class="btn btn-outline-accent btn-accent-arrow">Read
-                                    More<i class="icon icon-ns-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <img src="data:image/jpeg;base64, {{article.image_data}}" alt="banner" class="banner-image" />
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="banner-content">
+          {% for article in articles %} {% if article.id==2 %}
+          <h2 class="banner-title">{{ article.short_title }}</h2>
+          <p>{{ article.short_description }}</p>
+          <div class="btn-wrap">
+            <a
+              href="{{url_for('single_article', article_id=article.id)}}"
+              class="btn btn-outline-accent btn-accent-arrow"
+              >Read More<i class="icon icon-ns-arrow-right"></i
+            ></a>
+          </div>
+          {% endif %} {% endfor %}
         </div>
+      </div>
+      <div class="col-md-6">
+        {% for article in articles %} {% if article.id==2 %}
+        <img
+          src="data:image/jpeg;base64, {{article.image_data}}"
+          alt="banner"
+          class="banner-image img-fluid rounded shadow"
+        />
+        {% endif %} {% endfor %}
+      </div>
     </div>
+  </div>
 </section>
-{% endif %}
-{% endfor %}
 
 <section id="featured-books" class="py-5 my-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-header align-center">
-                    <div class="title">
-                        <span>Some quality items</span>
-                    </div>
-                    <h2 class="section-title">Featured Books</h2>
-                </div>
-                <div class="product-list">
-                    <div class="row">
-
-                        {% for book in books %}
-                        {% if book.id==1 %}
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
-                                        <img src="data:image/jpeg;base64, {{book.image_data}}" alt="Books"
-                                            class="product-item" /></a>
-                                </figure>
-                                <figcaption>
-                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
-                                        <h3>{{ book.title }}</h3>
-                                    </a>
-                                    <a href="{{ url_for('author', author_id=book.author.id) }}"><span>{{ book.author.name }}</span></a>
-                                </figcaption>
-                            </div>
-                        </div>
-                        {%endif%}
-
-                        {% if book.id==3 %}
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
-                                        <img src="data:image/jpeg;base64, {{book.image_data}}" alt="Books"
-                                            class="product-item" /></a>
-                                </figure>
-                                <figcaption>
-                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
-                                        <h3>{{ book.title }}</h3>
-                                    </a>
-                                    <a href="{{ url_for('author', author_id=book.author.id) }}"><span>{{ book.author.name }}</span></a>
-                                </figcaption>
-                            </div>
-                        </div>
-                        {%endif%}
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header text-center">
+          <div class="title">
+            <span>Some quality items</span>
+          </div>
+          <h2 class="section-title">Featured Books</h2>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="btn-wrap align-right">
-                    <a href="{{ url_for('store') }}" class="btn-accent-arrow">View all products <i
-                            class="icon icon-ns-arrow-right"></i></a>
-                </div>
+        <div class="product-list">
+          <div class="row">
+            {% for book in books %} {% if book.id in [1,2] %}
+            <div class="col-md-3 mb-4">
+              <div class="product-item card h-100">
+                <figure class="product-style">
+                  <a href="{{ url_for('book', book_id=book.id)}}">
+                    <img
+                      src="data:image/jpeg;base64, {{book.image_data}}"
+                      alt="{{ book.title }} Cover"
+                      class="card-img-top product-image"
+                  /></a>
+                </figure>
+                <figcaption class="card-body text-center">
+                  <a href="{{ url_for('book', book_id=book.id) }}">
+                    <h3 class="card-title">{{ book.title }}</h3>
+                  </a>
+                  <a href="{{ url_for('author', author_id=book.author.id) }}"
+                    ><span class="text-muted">{{ book.author.name }}</span></a
+                  >
+                </figcaption>
+              </div>
             </div>
+            {% endif %} {% endfor %}
+          </div>
         </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <a
+          href="{{ url_for('store') }}"
+          class="btn btn-outline-primary btn-accent-arrow"
+          >View all products <i class="icon icon-ns-arrow-right"></i
+        ></a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="best-selling" class="leaf-pattern-overlay">
-    <div class="corner-pattern-overlay"></div>
+<section id="best-selling" class="py-5 my-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                {% for book in books %}
+                {% if book.id == 1 %}
                 <div class="row">
-                    {% for book in books %}
-                    {% if book.id==1 %}
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-4">
                         <figure class="products-thumb">
-                            <a href="{{url_for('single_product', book_id=book.id)}}"><img
-                                    src="data:image/jpeg;base64, {{book.image_data}}" alt="book"
-                                    class="single-image" /></a>
+                            <a href="{{ url_for('book', book_id=book.id) }}">
+                                <img src="data:image/jpeg;base64, {{ book.image_data }}" alt="{{ book.title }} Cover" class="img-fluid rounded">
+                            </a>
                         </figure>
                     </div>
-
                     <div class="col-md-6">
                         <div class="product-entry">
-                            <h2 class="section-title divider">Best Selling
-                                Book</h2>
-
+                            <h2 class="section-title">Best Selling Book</h2>
                             <div class="products-content">
-                                <a href="{{ url_for('author', author_id=book.author.id) }}"><div class="author-name">{{book.author.name}}</div></a>
-                                <a href="{{url_for('single_product', book_id=book.id)}}"><h3 class="item-title">{{book.title}}</h3></a>
-                                <p>{{book.short_description}}</p>
-                                <div class="btn-wrap">
-                                    <a href="{{url_for('single_product', book_id=book.id)}}"
-                                        class="btn btn-outline-accent btn-accent-arrow">Read
-                                        More<i class="icon icon-ns-arrow-right"></i></a>
+                                <a href="{{ url_for('author', author_id=book.author.id) }}">
+                                    <div class="author-name">{{ book.author.name }}</div>
+                                </a>
+                                <a href="{{ url_for('book', book_id=book.id) }}">
+                                    <h3 class="item-title">{{ book.title }}</h3>
+                                </a>
+                                <p>{{ book.short_description }}</p>
+                                <div class="btn-wrap mt-3">
+                                    <a href="{{ url_for('book', book_id=book.id) }}" class="btn btn-outline-primary btn-accent-arrow">
+                                        Read More <i class="icon icon-ns-arrow-right"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
 
 <section id="popular-books" class="bookshelf py-5 my-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-header align-center">
-                    <div class="title">
-                        <span>Some quality items</span>
-                    </div>
-                    <h2 class="section-title">Popular Books</h2>
-                </div>
-
-                <div class="product-list">
-                    <div class="row">
-                        {% for book in books %}
-                        <div class="col-md-3">
-                            <div class="product-item">
-                                <figure class="product-style">
-                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
-                                        <img src="data:image/jpeg;base64, {{book.image_data}}" alt="Books"
-                                            class="product-item" /></a>
-                                </figure>
-                                <figcaption>
-                                    <a href="{{ url_for('single_product', book_id=book.id)}}">
-                                        <h3>{{ book.title }}</h3>
-                                    </a>
-                                    <a href="{{ url_for('author', author_id=book.author.id) }}"><span>{{ book.author.name }}</span></a>
-                                </figcaption>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header align-center">
+          <div class="title">
+            <span>Some quality items</span>
+          </div>
+          <h2 class="section-title">Popular Books</h2>
         </div>
+        <div class="product-list">
+          <div class="row">
+            {% for book in books %}
+            <div class="col-md-3">
+              <div class="product-item">
+                <figure class="product-style">
+                  <a href="{{ url_for('book', book_id=book.id)}}">
+                    <img
+                      src="data:image/jpeg;base64, {{book.image_data}}"
+                      alt="Books"
+                      class="product-item"
+                  /></a>
+                </figure>
+                <figcaption>
+                  <a href="{{ url_for('book', book_id=book.id)}}">
+                    <h3>{{ book.title }}</h3>
+                  </a>
+                  <a href="{{ url_for('author', author_id=book.author.id) }}"
+                    ><span>{{ book.author.name }}</span></a
+                  >
+                </figcaption>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<section id="quotation" class="align-center pb-5 mb-5">
-    <div class="inner-content">
-        <h2 class="section-title divider">Quote of the day</h2>
-        <blockquote>
-            <q>“The more that you read, the more things you will know. The more
-                that you learn, the more places
-                you’ll go.”</q>
-            <div class="author-name">Dr. Seuss</div>
-        </blockquote>
+<section id="quotation" class="py-5 my-5 text-center">
+    <div class="container">
+      <h2 class="section-title divider">Quote of the Day</h2>
+      <blockquote class="blockquote">
+        <q class="blockquote-text">“The more that you read, the more things you will know. The more that you learn, the more places you’ll go.”</q>
+        <div class="author-name mt-3">- Dr. Seuss</div>
+      </blockquote>
     </div>
 </section>
 
 <section id="latest-blog" class="py-5 my-5">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-header align-center">
-                    <div class="title">
-                        <span>Read our articles</span>
-                    </div>
-                    <h2 class="section-title">Latest Articles</h2>
-                </div>
-
-                {% for article in articles %}
-                <div class="row">
-                    <div class="col-md-4">
-                        <article class="column">
-                            <figure>
-                                <a href="{{url_for('single_article', article_id=article.id)}}">
-                                    <img src="data:image/jpeg;base64, {{article.image_data}}" alt="post"
-                                        class="post-image" />
-                                </a>
-                            </figure>
-
-                            <div class="post-item">
-                                <div class="meta-date">{{article.date_created}}</div>
-                                <h3>
-                                    <a href="{{url_for('single_article', article_id=article.id)}}">{{article.title}}</a>
-                                </h3>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-                {% endfor %}
-
-                <div class="row">
-                    <div class="btn-wrap align-center">
-                        <a href="{{ url_for('article') }}" class="btn btn-outline-accent btn-accent-arrow"
-                            tabindex="0">Read All Articles<i class="icon icon-ns-arrow-right"></i></a>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header text-center mb-5">
+            <div class="title">
+              <span>Read our articles</span>
             </div>
+            <h2 class="section-title">Latest Articles</h2>
+          </div>
+  
+          <div class="row">
+            {% for article in articles %}
+            <div class="col-md-4 mb-4">
+              <article class="article-item">
+                <figure>
+                  <a href="{{ url_for('single_article', article_id=article.id) }}">
+                    <img
+                      src="data:image/jpeg;base64, {{ article.image_data }}"
+                      alt="{{ article.title }} Cover"
+                      class="img-fluid rounded"
+                    />
+                  </a>
+                </figure>
+                <div class="post-item mt-3">
+                  <div class="meta-date text-muted">{{ article.date_created }}</div>
+                  <h3 class="article-title mt-2">
+                    <a href="{{ url_for('single_article', article_id=article.id) }}">{{ article.title }}</a>
+                  </h3>
+                </div>
+              </article>
+            </div>
+            {% endfor %}
+          </div>
+  
+          <div class="row">
+            <div class="col text-center">
+              <a href="{{ url_for('article') }}" class="btn btn-outline-primary">
+                Read All Articles <i class="icon icon-ns-arrow-right"></i>
+              </a>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</section>
+</section
 {% endblock content %}

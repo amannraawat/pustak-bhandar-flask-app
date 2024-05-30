@@ -30,7 +30,7 @@
         <div class="col-md-3">
           <div class="product-item">
             <figure class="product-style">
-              <a href="{{ url_for('single_product', book_id=book.id) }}"><img
+              <a href="{{ url_for('book', book_id=book.id) }}"><img
                   src="data:image/jpeg;base64, {{ book.image_data }}" alt="{{ book.title }} Cover"
                   class="product-item" /></a>
             </figure>
