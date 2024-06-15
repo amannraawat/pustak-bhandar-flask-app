@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<section class="bg-sand padding-medium">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <a href="#" class="product-image">
+          <img src="data:image/jpeg;base64, {{ book.image_data }}" class="img-fluid rounded shadow" alt="{{ book.title }} Cover">
+        </a>
+      </div>
+
+      <div class="col-md-7 pl-5">
+        <div class="product-detail">
+          <span class="badge badge-info">{{ book.genre }}</span>
+          <h1 class="mt-3">{{ book.title }}</h1>
+          <a href="{{ url_for('author', author_id=book.author.id) }}">
+            <h4 class="text-primary">
+              {{ book.author.name }}
+            </h4>
+          </a>
+          <p class="mt-3">{{ book.description }}</p>
+          <p>{{ book.first_para }}</p>
+          <p>{{ book.second_para }}</p>
+          <p>{{ book.third_para }}</p>
+          <p>{{ book.fourth_para }}</p>
+          <p>{{ book.fifth_para }}</p>
+          <div class="d-flex gap-3 mt-4">
+            <a href="{{ book.links }}" class="btn btn-custom">
+              Buy On Amazon
+            </a>
+            {% if is_favourite %}
+            <form action="{{ url_for('remove_favourite', book_id=book.id) }}" method="POST">
+              <button type="submit" class="btn btn-custom btn-danger">Remove from Favourites</button>
+            </form>
+            {% else %}
+            <form action="{{ url_for('add_favourite', book_id=book.id) }}" method="POST">
+              <button type="submit" class="btn btn-custom">Add to Favourites</button>
+            </form>
+            {% endif %}
+            <a href="{{ url_for('give_review', book_id=book.id) }}" class="btn btn-custom">
+              Give Review About The Book
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h2 class="review-section-title">Reviews</h2>
+{% if reviews %}
+    <ul class="review-card-list">
+        {% for review in reviews %}
+            <li class="review-card">
+                <div class="card-content">
+                    <strong class="review-user">{{ review.user.username }}</strong> rated it 
+                    <span class="review-rating">{{ review.rating }}/5</span> 
+                    {% for _ in range(review.rating) %}
+                        <span class="star">&#9733;</span> <!-- Unicode character for a star -->
+                    {% endfor %}
+                    {% for _ in range(5 - review.rating) %}
+                        <span class="star">&#9734;</span> <!-- Unicode character for an empty star -->
+                    {% endfor %}
+                    <p class="review-text">{{ review.review_text }}</p>
+                    <small class="review-timestamp">{{ review.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="no-reviews">No reviews yet. Be the first to review this book!</p>
+{% endif %}
+
+{% endblock content %}

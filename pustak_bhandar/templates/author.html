@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="author-section">
-                <div class="author-details">
-                    <div class="author-photo">
+            <div class="card p-4 mb-5 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <div class="author-photo mr-4">
                         <img src="data:image/jpeg;base64, {{ author.image_data }}" alt="Author Photo"
-                            class="img-fluid rounded-circle">
+                            class="author-img rounded-circle" style="width: 150px; height: 150px;">
                     </div>
                     <div class="author-info">
                         <h2 class="author-name">{{ author.name }}</h2>
@@ -20,28 +20,31 @@
     </div>
 </div>
 
-
 <section class="padding-medium">
     <div class="container">
-      <div class="row">
-        <h2>{{ author.name }}'s Books</h2>
-        <br><br>
-        {% for book in books %}
-        <div class="col-md-3">
-          <div class="product-item">
-            <figure class="product-style">
-              <a href="{{ url_for('book', book_id=book.id) }}"><img
-                  src="data:image/jpeg;base64, {{ book.image_data }}" alt="{{ book.title }} Cover"
-                  class="product-item" /></a>
-            </figure>
-            <figcaption>
-              <h3>{{ book.title }}</h3>
-              <a href="{{ url_for('author', author_id=book.author.id) }}"><p>{{ book.author.name }}</p></a>
-            </figcaption>
-          </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="text-center">{{ author.name }}'s Books</h2>
+            </div>
         </div>
-        {% endfor %}
-      </div>
+        <div class="row">
+            {% for book in books %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="{{ url_for('book', book_id=book.id) }}">
+                        <img src="data:image/jpeg;base64, {{ book.image_data }}" alt="{{ book.title }} Cover"
+                            class="card-img-top">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <a href="{{ url_for('author', author_id=book.author.id) }}" class="text-muted">
+                            <p class="card-text">{{ book.author.name }}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </section>
 

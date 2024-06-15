@@ -1,59 +1,62 @@
-{% extends "layout.html"%}
+{% extends "layout.html" %}
 {% block content %}
 
-<header>
-    <h1>{{article.title}}</h1>
-    <img src="data:image/jpeg;base64, {{article.image_data}}" alt="Article Image">
-</header>
+<div class="container mt-5">
+    <header class="article-header text-center mb-5">
+        <h1 class="article-singletitle">{{ article.title }}</h1>
+        <img src="data:image/jpeg;base64, {{ article.image_data }}" alt="Article Image" class="article-singleimage img-fluid rounded">
+    </header>
 
-<main>
-    <section id="introduction">
-        <p>{{article.description}}</p>
-    </section>
+    <main>
+        <section id="introduction" class="mb-5">
+            <p>{{ article.description }}</p>
+        </section>
 
-    <section id="section1">
-        <h2>{{article.section1}}</h2>
-        <article>
-            <p>{{article.section1_data}}</p>
-        </article>
-    </section>
+        <section id="section1" class="mb-5">
+            <h2 class="section-title">{{ article.section1 }}</h2>
+            <article>
+                <p>{{ article.section1_data }}</p>
+            </article>
+        </section>
 
-    <section id="section2">
-        <h2>{{article.section2}}</h2>
-        <article>
-            <p>{{article.section2_data}}</p>
-        </article>
-    </section>
+        <section id="section2" class="mb-5">
+            <h2 class="section-title">{{ article.section2 }}</h2>
+            <article>
+                <p>{{ article.section2_data }}</p>
+            </article>
+        </section>
 
-    <section id="section3">
-        <h2>{{article.section3}}</h2>
-        <article>
-            <p>{{article.section3_data}}</p>
-        </article>
-    </section>
+        <section id="section3" class="mb-5">
+            <h2 class="section-title">{{ article.section3 }}</h2>
+            <article>
+                <p>{{ article.section3_data }}</p>
+            </article>
+        </section>
 
-    <section id="section4">
-        <h2>{{article.section4}}</h2>
-        <article>
-            <p>{{article.section4_data}}</p>
-        </article>
-    </section>
+        <section id="section4" class="mb-5">
+            <h2 class="section-title">{{ article.section4 }}</h2>
+            <article>
+                <p>{{ article.section4_data }}</p>
+            </article>
+        </section>
 
-    <section id="section5">
-        <h2>{{article.section5}}</h2>
-        <article>
-            <p>{{article.section5_data}}</p>
-        </article>
-    </section>
+        <section id="section5" class="mb-5">
+            <h2 class="section-title">{{ article.section5 }}</h2>
+            <article>
+                <p>{{ article.section5_data }}</p>
+            </article>
+        </section>
 
-    <section id="conclusion">
-        <h2>{{article.conclusion}}</h2>
-        <p>{{article.conclusion_data}}</p>
-    </section>
+        <section id="conclusion" class="mb-5">
+            <h2 class="section-title">{{ article.conclusion }}</h2>
+            <p>{{ article.conclusion_data }}</p>
+        </section>
 
-    <div class="author-info">
-        <p class="author">Written by {{article.author}}</p>
-        <p class="date">Created on {{article.date_created}}</p>
-    </div>
-</main>
-{% endblock content%}
+        <div class="author-info text-center">
+            <p class="author">Written by {{ article.author }}</p>
+            <p class="date">Created on {{ article.date_created }}</p>
+        </div>
+    </main>
+</div>
+
+{% endblock content %}

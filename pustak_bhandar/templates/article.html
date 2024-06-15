@@ -1,4 +1,5 @@
-{% extends "layout.html" %} {% block content%}
+{% extends "layout.html" %}
+{% block content %}
 <section class="hero-section jarallax">
   <div class="site-banner">
     <div class="banner-content">
@@ -6,12 +7,12 @@
         <div class="row">
           <div class="col-md-12">
             <div class="colored">
-              <h1 class="page-title">Article</h1>
+              <h1 class="page-title">Articles</h1>
               <div class="breadcum-items">
                 <span class="item">
                   <a href="/">Home /</a>
                 </span>
-                <span class="item colored"> Article </span>
+                <span class="item colored"> Articles </span>
               </div>
             </div>
           </div>
@@ -24,41 +25,33 @@
 <section id="latest-blog" class="scrollspy-section padding-medium">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <div class="post-grid">
-          <div class="row">
-
-            {% for article in articles.items %}
-            <div class="col-md-4">
-              <article class="post-item">
-                <figure>
-                  <a href="{{url_for('single_article', article_id=article.id)}}" class="image-hvr-effect">
-                    <img src="data:image/jpeg;base64, {{ article.image_data }}" alt="{{ article.title }} Cover"
-                      class="post-image" />
-                  </a>
-                </figure>
-                <div class="post-content">
-                  <div class="meta-date">{{ article.date_created }}</div>
-                  <h3 class="post-title">
-                    <a href="#">{{ article.title }}</a>
-                  </h3>
-                  <p class="text">{{ article.short_description }}</p>
-                </div>
-              </article>
-            </div>
-            {% endfor %}
-
+      {% for article in articles.items %}
+      <div class="col-md-4 mb-4">
+        <article class="article-card">
+          <figure class="article-card-figure">
+            <a href="{{url_for('single_article', article_id=article.id)}}" class="image-hvr-effect">
+              <img src="data:image/jpeg;base64, {{ article.image_data }}" alt="{{ article.title }} Cover"
+                class="post-image img-fluid" />
+            </a>
+          </figure>
+          <div class="article-card-content">
+            <div class="article-card-date">{{ article.date_created }}</div>
+            <h3 class="article-card-title">
+              <a href="{{url_for('single_article', article_id=article.id)}}">{{ article.short_title }}</a>
+            </h3>
+            <p class="article-card-text">{{ article.short_description }}</p>
           </div>
-        </div>
+        </article>
       </div>
+      {% endfor %}
     </div>
-
+    <!-- Pagination -->
     <div class="row">
-      <nav class="mt-5">
-        <ul class="pagination justify-content-center">
+      <nav class="mt-5 mx-auto">
+        <ul class="pagination">
           {% for page_num in articles.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if page_num %}
-              {% if articles.page==page_num %}
+              {% if articles.page == page_num %}
                 <li class="page-item active">
                   <a class="page-link" href="{{url_for('article', page=page_num) }}">{{page_num}}</a>
                 </li>
@@ -68,7 +61,7 @@
                 </li>
               {% endif %}
             {% else %}
-              ...
+              <li class="page-item disabled"><span class="page-link">...</span></li>
             {% endif %}
           {% endfor %}
         </ul>
@@ -76,5 +69,4 @@
     </div>
   </div>
 </section>
-
-{% endblock content%}
+{% endblock content %}

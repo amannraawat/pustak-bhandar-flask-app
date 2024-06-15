@@ -1,4 +1,5 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %}
+{% block content %}
 <div class="site-banner">
   <div class="banner-content">
     <div class="container">
@@ -6,17 +7,15 @@
         <div class="col-md-12">
           <div class="colored">
             {% if favourite_books %}
-            <h1 class="page-title">Favourites</h1>
-            <div class="breadcum-items">
+            <h1 class="page-title">Store</h1>
+            <div class="breadcrumb-items">
               <span class="item">
-                <a href="/">Home /</a>
+                <a href="{{ url_for('home') }}">Home</a> /
               </span>
-              <span class="item colored">
-                Favourites
-              </span>
+              <span class="item colored">Store</span>
             </div>
             {% else %}
-            <h1 class="page-title">No favorites books</h1>
+            <h1 class="page-title">No favourite books.</h1>
             {% endif %}
           </div>
         </div>
@@ -25,26 +24,23 @@
   </div>
 </div>
 
-<section class="padding-medium">
+<section class="store-section py-5">
   <div class="container">
     <div class="row">
       {% for favourite in favourite_books %}
-      <div class="col-md-3">
-        <div class="product-item">
+      <div class="col-md-3 mb-4">
+        <div class="product-item card h-100">
           <figure class="product-style">
-            <a
-              href="{{ url_for('book', book_id=favourite.id) }}">
-              <img
-                src="data:image/jpeg;base64, {{ favourite.image_data }}"
-                alt="{{ favourite.title }} Cover"
-                class="product-item" /></a>
+            <a href="{{ url_for('book', book_id=favourite.id) }}">
+              <img src="data:image/jpeg;base64, {{ favourite.image_data }}" alt="{{ favourite.title }} Cover" class="card-img-top product-image" />
+            </a>
           </figure>
-          <figcaption>
-            <h3>{{ favourite.title }}</h3>
-            <a
-              href="{{ url_for('author', author_id=favourite.author.id) }}"><p>{{
-                favourite.author.name }}</p></a>
-          </figcaption>
+          <div class="card-body">
+            <h5 class="card-title">{{ favourite.title }}</h5>
+            <a href="{{ url_for('author', author_id=favourite.author.id) }}" class="card-text">
+              {{ favourite.author.name }}
+            </a>
+          </div>
         </div>
       </div>
       {% endfor %}
@@ -52,3 +48,4 @@
   </div>
 </section>
 {% endblock content %}
+
