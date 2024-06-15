@@ -45,7 +45,7 @@ class BookForm(FlaskForm):
     submit = SubmitField('Add Book')
     
 class ReviewForm(FlaskForm):
-    rating = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
+    rating = IntegerField('Rating (Out Of 5)', validators=[DataRequired(), NumberRange(min=1, max=5)])
     review_text = TextAreaField('Review')
     submit = SubmitField('Submit Review')
 
@@ -53,8 +53,8 @@ class ArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    section1 = StringField('Section 1', validators=[DataRequired()])
-    section1_data = TextAreaField('Section1 Data', validators=[DataRequired()])
+    section1 = StringField('Section 1')
+    section1_data = TextAreaField('Section1 Data')
     section2 = StringField('Section 2')
     section2_data = TextAreaField('Section2 Data')
     section3 = StringField('Section 3')

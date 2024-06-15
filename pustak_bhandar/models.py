@@ -1,7 +1,7 @@
 from pustak_bhandar import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
-from sqlalchemy import func
+# from sqlalchemy import func
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -49,13 +49,16 @@ class Favourite(db.Model):
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
     book = db.relationship('Book')
     
+
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     review_text = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False, default=func.utc_timestamp())
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    user = db.relationship('User', backref=db.backref('reviews', lazy=True))
     
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)

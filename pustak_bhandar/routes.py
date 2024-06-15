@@ -6,13 +6,15 @@ from flask_login import login_user, current_user, logout_user, login_required
 import base64
 import secrets, os
 from PIL import Image
+from datetime import datetime
+import pytz
 
 app.config['UPLOAD_FOLDER'] = 'static/images/book_covers'
 errors = Blueprint('errors', __name__)
 
 @app.route('/')
 def home():
-    book_ids = [1,2,3]
+    book_ids = [1,2,3,4,5,6,7]
     article_ids = [1,2,3]
     articles = Article.query.filter(Article.id.in_(article_ids)).all()
     books = Book.query.join(Author).filter(Book.id.in_(book_ids)).all()
@@ -54,7 +56,7 @@ def author(author_id):
 @app.route('/store')
 def store():
     page = request.args.get('page', 1, type=int)
-    books = Book.query.join(Author).order_by(Book.id.desc()).paginate(page=page, per_page=12)
+    books = Book.query.join(Author).order_by(Book.id.desc()).paginate(page=page, per_page=8)
     
     for book in books:
         if book.image_data:
@@ -74,7 +76,7 @@ def add_favourite(book_id):
         flash('Book added to favourites!', 'success')
     else:
         flash('Book is already in favourites!', 'info')
-    return redirect(url_for('home'))
+    return redirect(url_for('favourites'))
 
 @app.route('/remove_favourite/<int:book_id>', methods=['POST'])
 @login_required
@@ -106,7 +108,7 @@ def favourites():
 
 @app.route('/store/<int:book_id>')
 @login_required
-def single_product(book_id):
+def book(book_id):
     book = Book.query.join(Author).filter(Book.id==book_id).first()
     is_favourite=False
     if not current_user.is_anonymous:
@@ -114,8 +116,14 @@ def single_product(book_id):
     
     if book.image_data:
         book.image_data = base64.b64encode(book.image_data).decode('utf-8')
+        
+        
+    reviews = Review.query.filter_by(book_id=book_id).order_by(Review.timestamp.desc()).all()
+    local_timezone = pytz.timezone('Asia/Kolkata')  # Replace 'Your/Timezone' with your local timezone
+    for review in reviews:
+        review.timestamp = review.timestamp.replace(tzinfo=pytz.utc).astimezone(local_timezone)
     
-    return render_template('single_product.html', book=book, is_favourite=is_favourite)
+    return render_template('book.html', book=book, is_favourite=is_favourite, reviews=reviews)
 
 @app.route('/book/<int:book_id>/review', methods=['GET', 'POST'])
 @login_required
@@ -130,10 +138,10 @@ def give_review(book_id):
                         review_text=form.review_text.data)
         
         db.session.add(review)
-        db.sesion.commit()
+        db.session.commit()
         
         flash('Your review has been submitted!', 'success')
-        return redirect(url_for('single_product', book_id=book.id))
+        return redirect(url_for('book', book_id=book.id))
     
     return render_template('give_review.html', form=form, book=book)
 
@@ -147,7 +155,8 @@ def article():
             article.image_data = base64.b64encode(article.image_data).decode('utf-8')
         
         if article:
-            article.short_description = article.description[:50] + '...' if len(article.description)>50 else article.title
+            article.short_title = article.title[:20] + '...' if len(article.title)>30 else article.title
+            article.short_description = article.description[:30] + '...' if len(article.description)>50 else article.title
     return render_template('article.html', articles=articles, title='Article')
 
 @app.route('/articel/<int:article_id>')
