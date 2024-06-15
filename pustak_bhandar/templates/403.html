@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pustak</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/gif" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
-</head>
-<body>
-    <main role="main" class="container">
-        <div class="error-row">
-          <div class="col-md-8">
-            <div class="error-content-section">
-                <h1>You don't have permission to do that (403)</h1>
-                <p>Please check your account and try again.</p>
-            </div>
-          </div>
-        </div>
-    </main>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="pustak-403-section">
+  <h1 class="pustak-403-title">You don't have permission to do that (403)</h1>
+  <p class="pustak-403-message">Please check your account and try again.</p>
+  <a href="/" class="pustak-403-home-button">Go to Homepage</a>
+</div>
+{% endblock content %}
